@@ -15,7 +15,7 @@ class Game:
         pg.init()
         self.clock = pg.time.Clock()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        pg.display.set_caption("Emmanuel's awesome game!!!")
+        pg.display.set_caption("Paint Drying Sim")
         self.playing = True
         self.game_duration = 60
 
