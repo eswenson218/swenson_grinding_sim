@@ -109,7 +109,6 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
         if dir == 'x':
             hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
             if hits:
-                # print(self.pos)
                 if self.vel.x > 0:
                     if hits[0].state == "moveable":
                         hits[0].pos.x += self.vel.x
@@ -119,7 +118,6 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
                 if self.vel.x < 0:
                     self.pos.x = hits[0].rect.right
                 self.vel.x = 0
-                # hits[0].vel.x = 0
                 self.rect.x = self.pos.x
         if dir == 'y':
             hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
@@ -139,10 +137,8 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
                 if self.cd.ready():
                     self.health -= 10
                     self.cd.start()
-                # print("Ouch!")
             if str(hits[0].__class__.__name__) == "Coin":
                 self.coins += 1
-                print(self.coins)
 
     def update(self):
         # gets input and applies velocity to position
@@ -159,14 +155,6 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
         # check collisions with mobs and coins
         self.collide_with_stuff(self.game.all_mobs, False)
         self.collide_with_stuff(self.game.all_coins, True)
-
-        # handle cooldown visual indicator
-        if not self.cd.ready():
-            #self.image.fill(BLUE)
-            print(1)
-        else:
-            #self.image.fill(GREEN)
-            print(2)
 
 # makes Mob a sprite
 class Mob(Sprite):
@@ -209,7 +197,6 @@ class Mob(Sprite):
         spritesheet_height = self.spritesheet.get_height()
         
         self.total_frames = spritesheet_width // self.frame_width
-        print(f"Loading {self.animal_type} animation: {self.total_frames} frames from {spritesheet_width}x{spritesheet_height} spritesheet")
         
         for frame in range(self.total_frames):
             frame_surface = pg.Surface((self.frame_width, self.frame_height), pg.SRCALPHA)
@@ -221,7 +208,6 @@ class Mob(Sprite):
         self.current_frame = 0
         self.image = self.animation_frames[0]
         self.original_image = self.image
-        print(f"Initialized {self.animal_type} with {len(self.animation_frames)} frames")
         self.rect = self.image.get_rect()
         self.speed = MOB_SPEED
         self.speedchangex = False
@@ -309,13 +295,11 @@ class Coin(Sprite):
 
     def activate(self):
         self.game.time = max(0, self.game.time - 5)
-        print(f"Powerup: decreased time by 5 seconds! {self.game.time}s remaining")
         painting = self.game.all_targets.sprites()[0] if self.game.all_targets else None
         if painting:
             try:
                 max_hp = getattr(painting, 'max_health', 100)
                 painting.health = min(max_hp, painting.health + 5)
-                print(f"Powerup: also healed painting +5 (now {painting.health}/{max_hp})")
             except Exception:
                 pass
         self.kill()
@@ -349,9 +333,7 @@ class Wall(Sprite):
             hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
             if hits:
                 if self.vel.x > 0:
-                    print("a wall collided with a wall")
                     if hits[0].state == "moveable":
-                        print("i hit a moveable block...")
                         hits[0].pos.x += self.vel.x
                         if len(hits) > 1:
                             if hits[1].state == "unmoveable":
@@ -360,7 +342,6 @@ class Wall(Sprite):
                         self.pos.x = hits[0].rect.left - self.rect.width      
                 if self.vel.x < 0:
                     if hits[0].state == "moveable":
-                        print("i hit a moveable block...")
                         hits[0].pos.x += self.vel.x
                         if len(hits) > 1:
                             if hits[1].state == "unmoveable":
@@ -373,9 +354,7 @@ class Wall(Sprite):
             hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
             if hits:              
                 if self.vel.y > 0:
-                    print('wall y collide down')
                     if hits[0].state == "moveable":
-                        print("i hit a moveable block...")
                         hits[0].pos.y += self.vel.y
                         if len(hits) > 1:
                             if hits[1].state == "unmoveable":
@@ -385,7 +364,6 @@ class Wall(Sprite):
                         
                 if self.vel.y < 0:
                     if hits[0].state == "moveable":
-                        print("i hit a moveable block...")
                         hits[0].pos.y += self.vel.y
                         if len(hits) > 1:
                             if hits[1].state == "unmoveable":
@@ -416,7 +394,7 @@ class Projectile(Sprite):
         self.rect.x = x
         self.rect.y = y
         self.speed = 10
-        print
+
     def update(self):
         self.pos += self.vel * self.speed
         self.rect.x = self.pos.x
@@ -455,16 +433,13 @@ class Target_Object(Sprite):
             old_center = self.rect.center
             self.rect = self.image.get_rect()
             self.rect.center = old_center
-            print(f"Painting changed to {new_state} state at {self.health} HP")
 
     def update(self):
         hits = pg.sprite.spritecollide(self, self.game.all_mobs, True)
         if hits:
             mob = hits[0]
             self.health -= mob.damage
-            print(f"{mob.animal_type} dealt {mob.damage} damage! Painting health: {self.health}")
             if self.health <= 0:
-                print("The painting has been destroyed!")
                 self.game.playing = False
                 self.kill()
             else:

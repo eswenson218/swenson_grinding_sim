@@ -117,7 +117,6 @@ class Game:
     def events(self):
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                print("Window closed — quitting game")
                 self.playing = False
             if event.type == pg.MOUSEBUTTONDOWN:
                 # Get mouse position
@@ -131,7 +130,6 @@ class Game:
                     if coin.rect.collidepoint(mouse_pos):
                         # Activate powerup and remove it
                         coin.activate()
-                        print("Powerup activated")
 
     def update(self):
         # update all sprites
