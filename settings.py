@@ -1,5 +1,8 @@
 # Settings for main.py
 
+paint_drying_sim_difficulty = "normal"
+
+
 FPS = 30
 
 x = 100

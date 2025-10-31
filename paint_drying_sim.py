@@ -15,18 +15,71 @@ class Game:
         pg.init()
         self.clock = pg.time.Clock()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        pg.display.set_caption("Paint Drying Sim")
+        pg.display.set_caption("Paint Drying Simulator")
         self.playing = True
-        self.game_duration = 60
 
-        self.max_mobs = 10
+        if paint_drying_sim_difficulty == "easy":
+            self.game_duration = 30
+
+            self.max_mobs = 7
+            self.spawn_delay = 1000
+
+            self.coin_spawn_delay = 2000
+            self.coin_spawn_chance = 0.67
+            self.max_coins = 3
+
+        elif paint_drying_sim_difficulty == "hard":
+            self.game_duration = 90
+
+            self.max_mobs = 15
+            self.spawn_delay = 350
+
+            self.coin_spawn_delay = 4000
+            self.coin_spawn_chance = 0.41
+            self.max_coins = 1
+        
+        elif paint_drying_sim_difficulty == "eldritch":
+            self.game_duration = 120
+
+            self.max_mobs = 20
+            self.spawn_delay = 230
+
+            self.coin_spawn_delay = 5000
+            self.coin_spawn_chance = 0.17
+            self.max_coins = 1
+        
+        elif paint_drying_sim_difficulty == "aldric":
+            self.game_duration = 120
+
+            self.max_mobs = 20
+            self.spawn_delay = 67
+
+            self.coin_spawn_delay = 5555
+            self.coin_spawn_chance = 0.42
+            self.max_coins = 1
+        
+        elif paint_drying_sim_difficulty == "speed":
+            self.game_duration == 20
+
+            self.max_mobs = 12
+            self.spawn_delay = 350
+
+            self.coin_spawn_delay = 1600
+            self.coin_spawn_chance = 0.45
+            self.max_coins = 3
+        
+        else: # normal difficulty
+            self.game_duration = 60
+
+            self.max_mobs = 10
+            self.spawn_delay = 650
+
+            self.coin_spawn_delay = 2000
+            self.coin_spawn_chance = 0.5
+            self.max_coins = 2
+
         self.spawn_timer = 0
-        self.spawn_delay = 650
-
         self.coin_spawn_timer = 0
-        self.coin_spawn_delay = 3000
-        self.coin_spawn_chance = 0.5
-        self.max_coins = 2
         self.game_start_time = 0
 
     # sets up a game folder directory path using the current folder containing THIS file
