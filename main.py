@@ -1,5 +1,7 @@
 # Created by Emmanuel Swenson with the help of ChatGPT
 
+# yay I can use github from VS CODE!
+
 # import necessary modules
 import math
 import random
