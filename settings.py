@@ -1,7 +1,8 @@
 # Settings for main.py
 
-paint_drying_sim_difficulty = "normal"
+difficulties_list = ["Easy", "Normal", "Hard", "Apocalypse", "Aldric", "Speed Challenge"]
 
+selected_difficulty = "Normal"
 
 FPS = 30
 

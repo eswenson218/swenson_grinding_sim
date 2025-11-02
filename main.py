@@ -1,6 +1,13 @@
-# Created by Emmanuel Swenson with the help of ChatGPT
+# Created by Emmanuel Swenson
 
 # yay I can use github from VS CODE!
+
+# Scources
+'''
+https://www.geeksforgeeks.org/python/python-gui-tkinter/#
+https://www.geeksforgeeks.org/python/python-creating-a-button-in-tkinter/
+https://www.geeksforgeeks.org/python/python-tkinter-messagebox-widget/
+'''
 
 # import necessary modules
 import math
@@ -10,100 +17,108 @@ import pygame as pg
 from settings import *  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
+from paint_drying_sim import *
+import tkinter as tk
+from tkinter import messagebox
 from os import path
 
-class Game:
-    def __init__(self):
-        pg.init()
-        self.clock = pg.time.Clock()
-        self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        pg.display.set_caption("Emmanuel's awesome game!!!")
-        self.playing = True
+root = tk.Tk()
+root.title("Main")
 
-    # sets up a game folder directory path using the current folder containing THIS file
-    # give the Game class a map property which uses the Map class to parse the level1.txt file
-    # loads image file from images folder
-    def load_data(self):
-        self.game_folder = path.dirname(__file__)
-        self.img_folder = path.join(self.game_folder, 'images')
-        self.map = Map(path.join(self.game_folder, 'level1.txt'))
-        self.player_img = pg.image.load(path.join(self.img_folder, 'Drill_Off.png')).convert_alpha()
-        self.player_img_2 = pg.image.load(path.join(self.img_folder, 'Drill_On.png')).convert_alpha()
-        self.pig_img = pg.image.load(path.join(self.img_folder, 'Pig_Not_Moving.png')).convert_alpha()
-        self.cow_img = pg.image.load(path.join(self.img_folder, 'Cow_Not_Moving.png')).convert_alpha()
-        self.chicken_img = pg.image.load(path.join(self.img_folder, 'Chicken_Not_Moving.png')).convert_alpha()
-        self.sun_powerup_img = pg.image.load(path.join(self.img_folder, 'Sun_Powerup.png')).convert_alpha()
+global_selected_difficulty = selected_difficulty
+difficulty_var = tk.StringVar(root)
+difficulty_var.set(global_selected_difficulty)
 
-    def new(self):
-        # the sprite Groups allow us to update and draw sprites in grouped batches
-        self.load_data()
-        self.all_sprites = pg.sprite.Group()
-        self.all_mobs = pg.sprite.Group()
-        self.all_coins = pg.sprite.Group()
-        self.all_walls = pg.sprite.Group()
+pds_button = None
+placeholder_button = None
 
-        for row, tiles in enumerate(self.map.data):
-            for col, tile in enumerate(tiles):
-                if tile == '1':
-                    Wall(self, col, row, "unmoveable")
-                elif tile == '2':
-                    Wall(self, col, row, "moveable")
-                elif tile == '3':
-                    Wall(self, col, row, "breakable")
-                elif tile == 'C':
-                    Coin(self, col, row)
-                elif tile == 'P':
-                    self.player = Player(self, col, row)
-                elif tile == 'M':
-                    Mob(self, col, row)
+def difficulties():
+    return difficulties_list
 
-    def run(self):
-        while self.playing:
-            self.dt = self.clock.tick(FPS) / 1000
-            # input
-            self.events()
-            # process
-            self.update()
-            # output
-            self.draw()
-        pg.quit()
+def clear_all_widgets():
+    for tk_widget in root.winfo_children():
+        tk_widget.destroy()
 
-    def events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                print("Window closed — quitting game")
-                self.playing = False
-            if event.type == pg.MOUSEBUTTONDOWN:
-                print("Mouse clicked!")
+def load_main_menu():
+    clear_all_widgets()
+    root.title("Game Selector")
+    global pds_button, placeholder_button
+    pds_button = tk.Button(root, 
+                   text="Paint Drying Sim", 
+                   command = options_screen,
+                   activebackground="#669361", 
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="#3b6e36",
+                   cursor="hand2",
+                   disabledforeground="gray",
+                   fg="black",
+                   font=("Arial", 12),
+                   height=2,
+                   highlightbackground="black",
+                   highlightcolor="green",
+                   highlightthickness=2,
+                   justify="center",
+                   overrelief="raised",
+                   width=15,
+                   wraplength=100)
 
-    def update(self):
-        # update all sprites
-        self.all_sprites.update()
-        seconds = pg.time.get_ticks() // 1000
-        countdown = 10
-        self.time = countdown - seconds
+    pds_button.pack(padx=10, pady=10)
 
-    def draw_text(self, surface, text, size, color, x, y):
-        font_name = pg.font.match_font('arial')
-        font = pg.font.Font(font_name, size)
-        text_surface = font.render(text, True, color)
-        text_rect = text_surface.get_rect()
-        text_rect.midtop = (x, y)
-        surface.blit(text_surface, text_rect)
+    placeholder_button = tk.Button(root,
+                                text = "Placeholder",
+                                command = placeholder_cmd,
+                                bd = 3,
+                                cursor = "hand2",
+                                font = ("Arial", 12),
+                                height = 2,
+                                justify = "center",
+                                width = 15,
+                                wraplength = 100)
 
-    def draw(self):
-        self.screen.fill(DARK_GREY)
-        # HUD
-        self.draw_text(self.screen, str(self.player.health), 24, BLACK, 100, 100)
-        self.draw_text(self.screen, str(self.player.coins), 24, BLACK, 400, 100)
-        self.draw_text(self.screen, str(self.time), 24, BLACK, 500, 100)
-        # draw all sprites
-        self.all_sprites.draw(self.screen)
-        pg.display.flip()
+    placeholder_button.pack(padx=10, pady=10)
 
+def get_selected_difficulty():
+    global global_selected_difficulty
+    global_selected_difficulty = difficulty_var.get()
 
-if __name__ == "__main__":
-    # creating an instance or instantiating the Game class
-    g = Game()
-    g.new()
-    g.run()
+def run_game():
+    root.destroy()
+    try:
+        g = Game(global_selected_difficulty)
+        g.new()
+        g.run()
+    except:
+        messagebox.showerror("Error", "Whoops. This didn't work.")
+
+def launch_game():
+    get_selected_difficulty()
+    run_game()
+
+def options_screen():
+    clear_all_widgets()
+
+    root.title("Difficulty Selector")
+
+    opts_label = tk.Label(root, text = "Select Difficulty", font = ("Arial", 16))
+    opts_label.pack(padx = 20, pady = 20)
+
+    for difficulty in difficulties():
+        tk.Radiobutton(root, text = difficulty, variable = difficulty_var, value = difficulty, font = ("Arial", 10)).pack(anchor = "w", padx = 50, pady = 10)
+    
+    button_frame = tk.Frame(root)
+    button_frame.pack(pady = 20)
+
+    continue_button = tk.Button(button_frame, text = "Continue", command = launch_game, font = ("Arial", 12), width = 20)
+    continue_button.pack(side = "right", padx = 20, pady = 20)
+
+    back_button = tk.Button(button_frame, text = "Back", command = load_main_menu, font = ("Arial", 12), width = 20)
+    back_button.pack(side = "left", padx = 20, pady = 20)
+
+def placeholder_cmd():
+    print('click \nThis doesn\'t seem to do anything...')
+
+load_main_menu()
+
+root.mainloop()

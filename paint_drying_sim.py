@@ -11,16 +11,16 @@ from utils import *  # defining the characteristics of the maps
 from os import path
 
 class Game:
-    def __init__(self):
+    def __init__(self, selected_difficulty):
         pg.init()
         self.clock = pg.time.Clock()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption("Paint Drying Simulator")
         self.playing = True
 
-        if paint_drying_sim_difficulty == "easy":
-            self.game_duration = 30
-
+        if selected_difficulty == "Easy":
+            self.game_duration = 30\
+            
             self.max_mobs = 7
             self.spawn_delay = 1000
 
@@ -28,37 +28,37 @@ class Game:
             self.coin_spawn_chance = 0.67
             self.max_coins = 3
 
-        elif paint_drying_sim_difficulty == "hard":
-            self.game_duration = 90
+        elif selected_difficulty == "Hard":
+            self.game_duration = 80
 
             self.max_mobs = 15
-            self.spawn_delay = 350
+            self.spawn_delay = 420
 
-            self.coin_spawn_delay = 4000
-            self.coin_spawn_chance = 0.41
-            self.max_coins = 1
+            self.coin_spawn_delay = 3500
+            self.coin_spawn_chance = 0.5
+            self.max_coins = 2
         
-        elif paint_drying_sim_difficulty == "eldritch":
-            self.game_duration = 120
+        elif selected_difficulty == "Apocalypse":
+            self.game_duration = 100
 
             self.max_mobs = 20
-            self.spawn_delay = 230
+            self.spawn_delay = 250
 
-            self.coin_spawn_delay = 5000
+            self.coin_spawn_delay = 4500
             self.coin_spawn_chance = 0.17
             self.max_coins = 1
         
-        elif paint_drying_sim_difficulty == "aldric":
+        elif selected_difficulty == "Aldric":
             self.game_duration = 120
 
             self.max_mobs = 20
             self.spawn_delay = 67
 
-            self.coin_spawn_delay = 5555
+            self.coin_spawn_delay = 5000
             self.coin_spawn_chance = 0.42
             self.max_coins = 1
         
-        elif paint_drying_sim_difficulty == "speed":
+        elif selected_difficulty == "Speed Challenge":
             self.game_duration == 20
 
             self.max_mobs = 12
@@ -68,7 +68,7 @@ class Game:
             self.coin_spawn_chance = 0.45
             self.max_coins = 3
         
-        else: # normal difficulty
+        else: # Normal difficulty
             self.game_duration = 60
 
             self.max_mobs = 10
@@ -238,6 +238,6 @@ class Game:
 
 if __name__ == "__main__":
     # creating an instance or instantiating the Game class
-    g = Game()
+    g = Game(selected_difficulty)
     g.new()
     g.run()
