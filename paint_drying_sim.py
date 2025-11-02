@@ -59,7 +59,7 @@ class Game:
             self.max_coins = 1
         
         elif selected_difficulty == "Speed Challenge":
-            self.game_duration == 20
+            self.game_duration = 20
 
             self.max_mobs = 12
             self.spawn_delay = 350
