@@ -1,9 +1,6 @@
 from settings import *
 import pygame as pg
 
-# Object or Class
-
-
 # brings the map defined in the text files into a defined map
 from settings import *
 import pygame as pg

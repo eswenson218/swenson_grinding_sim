@@ -172,38 +172,41 @@ class Mob(Sprite):
         
         if mob_type == 1:
             self.static_image = game.pig_img
-            self.spritesheet = game.pig_moving_img
+            raw_spritesheet_img = game.pig_moving_img
             self.animal_type = "pig"
             self.damage = 15
             self.frame_width = 64
             self.frame_height = 64
         elif mob_type == 2:
             self.static_image = game.chicken_img
-            self.spritesheet = game.chicken_moving_img
+            raw_spritesheet_img = game.chicken_moving_img
             self.animal_type = "chicken"
             self.damage = 5
             self.frame_width = 32
             self.frame_height = 32
         else:
             self.static_image = game.cow_img
-            self.spritesheet = game.cow_moving_img
+            raw_spritesheet_img = game.cow_moving_img
             self.animal_type = "cow"
             self.damage = 25
             self.frame_width = 96
             self.frame_height = 96
             
         self.animation_frames = []
-        spritesheet_width = self.spritesheet.get_width()
-        spritesheet_height = self.spritesheet.get_height()
+        spritesheet_width = raw_spritesheet_img.get_width()
+        spritesheet_height = raw_spritesheet_img.get_height()
         
-        self.total_frames = spritesheet_width // self.frame_width
+        self.frames_x = spritesheet_width // self.frame_width
+        self.frames_y = spritesheet_height // self.frame_height
         
-        for frame in range(self.total_frames):
-            frame_surface = pg.Surface((self.frame_width, self.frame_height), pg.SRCALPHA)
-            source_x = frame * self.frame_width
-            frame_surface.blit(self.spritesheet, (0, 0), 
-                             (source_x, 0, self.frame_width, self.frame_height))
-            self.animation_frames.append(frame_surface)
+        for row in range(self.frames_y):
+            for col in range(self.frames_x):
+                source_x = col * self.frame_width
+                source_y = row * self.frame_height
+                frame_surface = pg.Surface((self.frame_width, self.frame_height), pg.SRCALPHA)
+                frame_surface.blit(raw_spritesheet_img, (0, 0), 
+                                (source_x, source_y, self.frame_width, self.frame_height))
+                self.animation_frames.append(frame_surface)
         
         self.current_frame = 0
         self.image = self.animation_frames[0]
@@ -215,6 +218,7 @@ class Mob(Sprite):
         self.startspeed = 1
         self.vel = vec(0,0)
         self.pos = vec(x,y) * TILESIZE[0]
+
     def collide_with_walls(self, dir):
         if dir == 'x':
             hits = pg.sprite.spritecollide(self, self.game.all_walls, False)
