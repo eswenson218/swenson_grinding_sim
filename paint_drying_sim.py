@@ -19,7 +19,7 @@ class Game:
         self.playing = True
 
         if selected_difficulty == "Easy":
-            self.game_duration = 30\
+            self.game_duration = 30
             
             self.max_mobs = 7
             self.spawn_delay = 1000
@@ -62,7 +62,7 @@ class Game:
             self.game_duration = 20
 
             self.max_mobs = 12
-            self.spawn_delay = 350
+            self.spawn_delay = 250
 
             self.coin_spawn_delay = 1600
             self.coin_spawn_chance = 0.45
