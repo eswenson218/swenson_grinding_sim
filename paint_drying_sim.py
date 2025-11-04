@@ -52,7 +52,7 @@ class Game:
             self.game_duration = 120
 
             self.max_mobs = 20
-            self.spawn_delay = 67
+            self.spawn_delay = 100
 
             self.coin_spawn_delay = 5000
             self.coin_spawn_chance = 0.42

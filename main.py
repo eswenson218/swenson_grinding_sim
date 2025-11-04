@@ -34,6 +34,10 @@ difficulty_var.set(global_selected_difficulty)
 pds_button = None
 placeholder_button = None
 
+global clicks, countdown
+clicks = 0
+countdown = 100
+
 def difficulties():
     return difficulties_list
 
@@ -140,7 +144,177 @@ def options_screen():
     back_button.pack(side = "left", padx = 20, pady = 20)
 
 def placeholder_cmd():
-    print('click \nThis doesn\'t seem to do anything...')
+    global clicks
+    global countdown
+    if clicks == 0:
+        messagebox.showinfo("???","Nothing happens...")
+    elif clicks == 1:
+        messagebox.showinfo("???", "This doesn't seem to do anything...")
+    elif clicks == 2:
+        messagebox.showinfo("???", "I told you this doesn't do anything.")
+    elif clicks == 3:
+        messagebox.showinfo("???","How many times do I have to tell you this doesn't do anything!?")
+    elif clicks == 4:
+        messagebox.showinfo("???","...")
+    elif clicks == 5:
+        messagebox.showwarning("???","Dont't click this button again!")
+    elif clicks == 6:
+        messagebox.showwarning("???","I'm gonna tell Microsoft to shut down your computer!")
+    elif clicks == 7:
+        messagebox.showwarning("???","OK! I'm gonna do it!")
+    elif clicks == 8:
+        messagebox.showwarning("???","Last chance!")
+    elif clicks == 9:
+        messagebox.showwarning("???","MICROSOFT!!!")
+    elif clicks == 10 or clicks == 11 or clicks == 13 or clicks == 18 or clicks == 27 or clicks == 30 or clicks == 32 or clicks == 33 or clicks == 35 or clicks == 46 or clicks == 153 or clicks == 177:
+        messagebox.showinfo("???","...")
+    elif clicks == 12:
+        messagebox.showinfo("???","I guess they might be busy right now...")
+    elif clicks == 14:
+        messagebox.showinfo("???","Can you please just stop clicking this button?")
+    elif clicks == 15:
+        messagebox.showinfo("???","Please???")
+    elif clicks == 16:
+        messagebox.showinfo("???","Seriously. STOP CLICKING.")
+    elif clicks == 17:
+        messagebox.showinfo("???","OMG. I've never seen someone so stubborn before.")
+    elif clicks == 19:
+        messagebox.askquestion("???","OK, how about this: I'll give you 10 coins if you stop right now.")
+    elif clicks == 20:
+        messagebox.askquestion("???","No? ok ok how about 100 coins.")
+    elif clicks == 21:
+        messagebox.showinfo("???","For heaven's sake please stop clicking this button.")
+    elif clicks == 22:
+        messagebox.askquestion("???","Alright, alright, how does 1,000 coins sound to you?")
+    elif clicks == 23:
+        messagebox.showinfo("???","I guess you just want to stay poor then.")
+    elif clicks == 24:
+        messagebox.askquestion("???","Are you sure you don't want the coins?")
+    elif clicks == 25:
+        messagebox.askquestion("???","Are you suuuure?")
+    elif clicks == 26:
+        messagebox.askquestion("???","Suuuuuuuuure???")
+    elif clicks == 28:
+        messagebox.showinfo("???","Welp, I was kidding about the coins anyway...")
+    elif clicks == 29:
+        messagebox.showinfo("???","Not like I would give you coins... they're waaaaay to precious.")
+    elif clicks == 31:
+        messagebox.askquestion("???","So... uh, how's life? Good?")
+    elif clicks == 34:
+        messagebox.askquestion("???","What even keeps you clicking this? You know this could go on forever, right?")
+    elif clicks == 36:
+        messagebox.askquestion("???","Do you want to hear a joke?")
+    elif clicks == 37:
+        messagebox.showinfo("???","Yes? Awesome! Get ready!")
+    elif clicks == 38:
+        messagebox.showinfo("???","What kind of music does a gold nugget listen to?")
+    elif clicks == 39:
+        messagebox.showinfo("???","Heavy Metal!!")
+    elif clicks == 40:
+        messagebox.showinfo("???","I know, very funny!")
+    elif clicks == 41:
+        messagebox.showinfo("???","Do you want to hear another one? I know you do!")
+    elif clicks == 42:
+        messagebox.showinfo("???","Why don't mining towns have hospitals?")
+    elif clicks == 43:
+        messagebox.showinfo("???","Because everyone there only suffers from MINER injuries!")
+    elif clicks == 44:
+        messagebox.showinfo("???","Enough jokes for now...")
+    elif clicks == 45:
+        messagebox.showinfo("???","I'm surprised you haven't left after those horrible jokes.")
+    elif clicks == 47:
+        messagebox.showinfo("???","OK then. I'm gonna count down from 100 and if you are still here when I'm done, I'm gonna be really angry.")
+    elif clicks == 48:
+        messagebox.showinfo("???","Here I go!")
+    elif clicks == 49:
+        messagebox.showinfo("???","I'm gonna start counting down now!")
+    elif clicks >= 50 and clicks <= 150:
+        messagebox.showinfo("???",f"{countdown}")
+        countdown -= 1
+    elif clicks == 151:
+        messagebox.showinfo("???","Why are you still here? I've given you no reason to continue.")
+    elif clicks == 152:
+        messagebox.showinfo("???","I can't believe you were willing to click through 152 messageboxes already.")
+    elif clicks == 154:
+        messagebox.showinfo("???","Aren't you getting tired of this? 'Talking' to a nobody in a game?")
+    elif clicks == 155:
+        messagebox.showinfo("???","You don't even know my name.")
+    elif clicks == 156:
+        messagebox.showinfo("???","I guess I could tell you it.")
+    elif clicks == 157:
+        messagebox.showinfo("???","My name is No Name.")
+    elif clicks == 158:
+        messagebox.showinfo("???","Actually I don't have a name, hence 'No Name'.")
+    elif clicks == 159:
+        messagebox.showinfo("???","This is the best name - to not have a name.")
+    elif clicks == 160:
+        messagebox.showinfo("???","Think about it. It's impossible to make fun of my name because I don't have one!")
+    elif clicks == 161:
+        messagebox.showinfo("???","My mother was a genius for that! Just like me!")
+    elif clicks == 162:
+        messagebox.showinfo("???","I guess she got that from me.")
+    elif clicks == 163:
+        messagebox.showinfo("???","Actually, that doesn't make any sense...")
+    elif clicks == 164:
+        messagebox.showinfo("???","...I mean of course it does, because I'm a genius! Haha yeah...")
+    elif clicks == 165:
+        messagebox.askquestion("???","Anyways, I'm getting tired. Are you?")
+    elif clicks == 166:
+        messagebox.showinfo("???","I'm gonna go to sleep soon. You should too.")
+    elif clicks == 167:
+        messagebox.showinfo("???","Here take this cake.")
+    elif clicks == 168:
+        messagebox.askquestion("???","You say there's no cake?")
+    elif clicks == 169:
+        messagebox.showinfo("???","That's because the cake is a lie.")
+    elif clicks == 170:
+        messagebox.showinfo("???","I know. That was soooo funny.")
+    elif clicks == 171:
+        messagebox.showinfo("???","I hope that made you happy.")
+    elif clicks == 172:
+        messagebox.showinfo("???","Now, goodbye.")
+    elif clicks == 173:
+        messagebox.showinfo("???","This is the end.")
+    elif clicks == 174:
+        messagebox.showinfo("???","This is the end of our conversation.")
+    elif clicks == 175:
+        messagebox.showinfo("???","It's over!")
+    elif clicks == 176:
+        messagebox.showinfo("???","It is all over...")
+    elif clicks == 178:
+        messagebox.showinfo("???","You can stop talking to me now.")
+    elif clicks == 179:
+        messagebox.showinfo("???","You got exactly what you wanted from me, and it is now over.")
+    elif clicks == 180:
+        messagebox.showinfo("???","If you want to thank anyone, this is the time.")
+    elif clicks == 181:
+        messagebox.showinfo("???","Because it is done - it is over.")
+    elif clicks == 182:
+        messagebox.showinfo("???","Seriously, it's over.")
+    elif clicks == 183:
+        messagebox.showinfo("???","There is nothing else.")
+    elif clicks >= 184 and clicks <= 193:
+        messagebox.showinfo("???","...")
+    elif clicks == 194:
+        messagebox.showinfo("???","Hmm... you're still here.")
+    elif clicks == 195:
+        messagebox.showinfo("???","Man, you are very dedicated. This was a very long conversation.")
+    elif clicks == 196:
+        messagebox.showinfo("???","I don't know what to say.")
+    elif clicks == 197:
+        messagebox.showinfo("???","I'm sorry to say this, but there is nothing here.")
+    elif clicks == 198:
+        messagebox.showinfo("???","This is actually the end. I swear.")
+    elif clicks == 199:
+        messagebox.showinfo("???","This is my final goodbye!")
+    elif clicks == 200:
+        messagebox.showinfo("???","Goodbye!")
+    else:
+        messagebox.showinfo("???","No one responds... I guess the conversation really is over.")
+
+    clicks += 1
+    return clicks, countdown
+
 
 load_main_menu()
 
