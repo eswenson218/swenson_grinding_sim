@@ -88,7 +88,7 @@ class Game:
             "mini heater": {
                 "name": "Mini Heater",
                 "cost": 5000,
-                "dps bonus": 50,
+                "dps bonus": 75,
                 "count": 0,
                 "purchased": False
             },
@@ -237,8 +237,7 @@ class Game:
         for key, upgrade_data in self.upgrades.items():
             rect = self.get_upgrade_rect(key)
             is_dps_upgrade = "dps bonus" in upgrade_data
-            color = GREY 
-            text_color = WHITE
+            color = GREY
             if not upgrade_data["purchased"]:
                 if self.dryness >= upgrade_data["cost"]:
                     color = GREEN
@@ -254,7 +253,7 @@ class Game:
             if is_dps_upgrade:
                 name_text = f"{upgrade_data['name']} (x{upgrade_data['count']})"
                 
-            self.draw_text(self.screen, name_text, 24, text_color, rect.centerx, rect.top + 10)
+            self.draw_text(self.screen, name_text, 24, WHITE, rect.centerx, rect.top + 10)
 
             if is_dps_upgrade:
                 effect_text = f"+{upgrade_data['dps bonus']} /s"
@@ -265,12 +264,12 @@ class Game:
                 else:
                     effect_text = f"{dpc_value} DPC"
             
-            self.draw_text(self.screen, effect_text, 18, text_color, rect.centerx, rect.top + 35)
+            self.draw_text(self.screen, effect_text, 18, WHITE, rect.centerx, rect.top + 35)
             
-            self.draw_text(self.screen, effect_text, 18, text_color, rect.centerx, rect.top + 35)
+            self.draw_text(self.screen, effect_text, 18, WHITE, rect.centerx, rect.top + 35)
 
             if is_dps_upgrade or not upgrade_data["purchased"]:
-                self.draw_text(self.screen, f"Cost: {upgrade_data['cost']}", 18, text_color, rect.centerx, rect.top + 55)
+                self.draw_text(self.screen, f"Cost: {upgrade_data['cost']}", 18, WHITE, rect.centerx, rect.top + 55)
     
     def draw(self):
         self.screen.blit(self.bg_img, (0, 0))
