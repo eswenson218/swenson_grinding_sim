@@ -449,15 +449,30 @@ class Target_Object(Sprite):
             else:
                 self.update_painting_state()
 
-class Drill(Sprite):
-    def __init__(self, game, x, y):
+class FloatingText(Sprite):
+    def __init__(self, game, text, size, color, x, y):
+        self._layer = 10
+        Sprite.__init__(self, game.all_sprites, game.all_floating_text)
         self.game = game
-        Sprite.__init__(self, self.groups)
-        self.image = pg.Surface(TILESIZE[0:2])
-        self.image.fill(RED)
+        self.font = pg.font.match_font('Arial')
+        self.size = size
+        self.color = color
+        
+        self.image = self.render_text(text)
         self.rect = self.image.get_rect()
-        self.pos = vec(x,y) * TILESIZE[0]
+        self.rect.center = (x, y)
+        
+        self.pos = pg.math.Vector2(x, y)
+        self.vel = pg.math.Vector2(0, -40)
+        self.lifetime = 1000
+        self.spawn_time = pg.time.get_ticks()
+
+    def render_text(self, text):
+        font = pg.font.Font(self.font, self.size)
+        return font.render(text, True, self.color)
+
     def update(self):
-        mouse_pos = pg.mouse.get_pos()
-        self.pos.x = mouse_pos[0]
-        self.pos.y = mouse_pos[1]
+        self.pos += self.vel * self.game.dt
+        self.rect.center = self.pos
+        if pg.time.get_ticks() - self.spawn_time > self.lifetime:
+            self.kill()

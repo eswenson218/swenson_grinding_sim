@@ -83,6 +83,22 @@ def load_main_menu():
                                 width = 15,
                                 wraplength = 100)
 
+    paint_clicker_button = tk.Button(root,
+                                     text = "Art Clicker",
+                                     command = run_game,
+                                     bd = 3,
+                                     cursor = "spraycan",
+                                     font = ("Arial", 12),
+                                     height = 2,
+                                     justify = "center",
+                                     width = 15,
+                                     wraplength = 100,
+                                     bg = "#80633A",
+                                     fg = "#FFFFFF",
+                                     activebackground = "#9D8665")
+
+    paint_clicker_button.pack(padx = 10, pady = 10)
+
     placeholder_button.pack(padx = 10, pady = 10)
 
     quit_button = tk.Button(root,
@@ -146,10 +162,11 @@ def options_screen():
 def placeholder_cmd():
     global clicks
     global countdown
+    clicker_button_shown = (clicks == 200)
     if clicks == 0:
-        messagebox.showinfo("???","Nothing happens...")
+        messagebox.showinfo("???","This doesn't seem to do anything...")
     elif clicks == 1:
-        messagebox.showinfo("???", "This doesn't seem to do anything...")
+        messagebox.showinfo("???", "Nothing happens...")
     elif clicks == 2:
         messagebox.showinfo("???", "I told you this doesn't do anything.")
     elif clicks == 3:
@@ -313,8 +330,8 @@ def placeholder_cmd():
         messagebox.showinfo("???","No one responds... I guess the conversation really is over.")
 
     clicks += 1
+    
     return clicks, countdown
-
 
 load_main_menu()
 

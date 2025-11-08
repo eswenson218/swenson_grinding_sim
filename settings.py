@@ -20,6 +20,9 @@ TILESIZE = (32, 32) # tuple used to define tilesize
 WIDTH = TILESIZE[0] * TILES_W
 HEIGHT = TILESIZE[1] * TILES_H
 
+CLICKER_W = TILESIZE[0] * 36
+CLICKER_H = TILESIZE[1] * 24
+
 # player settings
 HEALTH = 5
 PLAYER_SPEED = 8
