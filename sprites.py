@@ -460,11 +460,11 @@ class FloatingText(Sprite):
         
         self.image = self.render_text(text)
         self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.rect.center = (x, y - 50)
         
         self.pos = pg.math.Vector2(x, y)
         self.vel = pg.math.Vector2(0, -40)
-        self.lifetime = 1000
+        self.lifetime = 2000
         self.spawn_time = pg.time.get_ticks()
 
     def render_text(self, text):

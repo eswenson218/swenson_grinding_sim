@@ -84,7 +84,7 @@ def load_main_menu():
                                 wraplength = 100)
 
     paint_clicker_button = tk.Button(root,
-                                     text = "Art Clicker",
+                                     text = "Paint Drying Clicker",
                                      command = run_game,
                                      bd = 3,
                                      cursor = "spraycan",
