@@ -60,56 +60,56 @@ class Game:
             "blanket": {
                 "name": "Blanket",
                 "cost": 5,
-                "dps bonus": 0.02,
+                "dps bonus": 0.1,
                 "count": 0,
                 "purchased": False
             },
             "light bulb": {
                 "name": "Light Bulb",
-                "cost": 20,
-                "dps bonus": 0.1,
+                "cost": 25,
+                "dps bonus": 1,
                 "count": 0,
                 "purchased": False
             },
             "fan": {
                 "name": "Fan",
                 "cost": 100,
-                "dps bonus": 1,
+                "dps bonus": 5,
                 "count": 0,
                 "purchased": False
             },
             "lantern": {
                 "name": "Lantern",
                 "cost": 1200,
-                "dps bonus": 4,
+                "dps bonus": 25,
                 "count": 0,
                 "purchased": False
             },
             "mini heater": {
                 "name": "Mini Heater",
                 "cost": 5000,
-                "dps bonus": 20,
+                "dps bonus": 50,
                 "count": 0,
                 "purchased": False
             },
             "portable heater": {
                 "name": "Portable Heater",
                 "cost": 25000,
-                "dps bonus": 100,
+                "dps bonus": 500,
                 "count": 0,
                 "purchased": False
             },
             "campfire": {
                 "name": "Campfire",
                 "cost": 80000,
-                "dps bonus": 500,
+                "dps bonus": 2500,
                 "count": 0,
                 "purchased": False
             },
             "lava bucket": {
                 "name": "Lava Bucket",
                 "cost": 200000,
-                "dps bonus": 2500,
+                "dps bonus": 10000,
                 "count": 0,
                 "purchased": False
             }
@@ -182,11 +182,6 @@ class Game:
             elif not upgrade["purchased"]:
                 self.dryness_per_click = upgrade["dpc"]
                 upgrade["purchased"] = True
-
-        elif upgrade["purchased"]:
-            print(f"{upgrade['name']} already purchased.")
-        else:
-            print(f"Not enough dryness! Need {upgrade['cost']}. Have {self.dryness}.")
     
     def update(self):
         self.all_sprites.update()
