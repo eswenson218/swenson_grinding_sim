@@ -370,21 +370,16 @@ class Game:
         
         if self.permanent_upgrades["Autoclicker"]["purchased"]:
             autoclick_data = self.permanent_upgrades["Autoclicker"]
-            cooldown = autoclick_data["cooldown"] - autoclick_data.get("time_reduction", 0.0)
+            cooldown = autoclick_data["cooldown"] - autoclick_data.get("time_reduction", 0.0) 
             self.autoclick_timer += self.dt
             
             if self.autoclick_timer >= cooldown:
                 click_value = self.dryness_per_click
-                
-                if self.permanent_upgrades["Thermotropism"]["purchased"]:
-                    dps_bonus = self.dryness_per_second * 0.01
-                    click_value += dps_bonus
-                
                 self.dryness += click_value
                 self.autoclick_timer = 0.0
                 
-                FloatingText(self, f"Autoclick +{click_value:.2f}", 30, CYAN,
-                             self.clicker_painting_rect.centerx + random.randint(-50, 50),
+                FloatingText(self, f"Autoclick +{click_value:.2f}", 30, CYAN, 
+                             self.clicker_painting_rect.centerx + random.randint(-50, 50), 
                              self.clicker_painting_rect.centery + random.randint(-50, 50))
                 
         if self.is_scaling:
@@ -457,7 +452,7 @@ class Game:
             self.draw_text(self.screen, name_text, 24, WHITE, rect.centerx, rect.top + 10)
 
             if is_dps_upgrade:
-                effect_text = f"+{upgrade_data['dps bonus']} /s"
+                effect_text = f"+{upgrade_data['dps bonus']:,} /s"
             else:
                 dpc_value = upgrade_data.get("dpc", 0) 
                 if upgrade_data["purchased"]:
@@ -470,7 +465,7 @@ class Game:
             self.draw_text(self.screen, effect_text, 18, WHITE, rect.centerx, rect.top + 35)
 
             if is_dps_upgrade or not upgrade_data["purchased"]:
-                self.draw_text(self.screen, f"Cost: {upgrade_data['cost']}", 18, WHITE, rect.centerx, rect.top + 55)
+                self.draw_text(self.screen, f"Cost: {upgrade_data['cost']:,}", 18, WHITE, rect.centerx, rect.top + 55)
 
     def draw_ascension_button(self):
         rect = self.get_ascension_rect()
