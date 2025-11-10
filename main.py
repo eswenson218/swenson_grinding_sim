@@ -17,6 +17,7 @@ import pygame as pg
 from settings import *  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
+from paint_drying_clicker import *
 from paint_drying_sim import *
 import tkinter as tk
 from tkinter import messagebox
