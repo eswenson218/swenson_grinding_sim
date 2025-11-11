@@ -12,19 +12,21 @@ from os import path
 
 class Game:
     def __init__(self):
-        pg.init()
-        self.clock = pg.time.Clock()
-        self.screen = pg.display.set_mode((CLICKER_W, CLICKER_H))
+        pg.init() # initializing pygame
+        self.clock = pg.time.Clock() # creating the game clock
+        self.screen = pg.display.set_mode((CLICKER_W, CLICKER_H)) # screen dimentions
         pg.display.set_caption("Paint Drying Clicker")
         self.playing = True
 
-        self.current_screen = "game"
+        self.current_screen = "game" # what screen to be showed
 
         # these will not be reset
         self.ascension_count = 0
         self.ascension_cost = 100000
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
+            # key is upgrade name, value is the dictionary inside the dictionary
+            # that key is the name of data for the upgrades, its value is the data
             "Thermotropism": { # gives you 1% of your dps every click on top of your dpc
                 "cost": 1000000,
                 "purchased": False
@@ -67,6 +69,8 @@ class Game:
         self.dryness_per_click = 1
         self.dryness_per_second = 0.0
         self.upgrades = { # 2D dictionary using key value pairs to store data about upgrades
+            # key is upgrade name, value is the dictionary inside the dictionary
+            # that key is the name of data for the upgrades, its value is the data
             "candle": { # increases dpc to 2
                 "name": "Candle",
                 "base cost": 500,
@@ -619,6 +623,7 @@ class Game:
 
 # running the game
 if __name__ == "__main__":
+    # creating an instance or instanciating the game class
     g = Game()
     g.new()
     g.run()
