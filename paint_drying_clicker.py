@@ -22,7 +22,7 @@ class Game:
 
         # these will not be reset
         self.ascension_count = 0
-        self.ascension_cost = 100000
+        self.ascension_cost = 10000
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
             # key is upgrade name, value is the dictionary inside the dictionary
@@ -45,7 +45,7 @@ class Game:
                 "purchased": False
             },
             "Heavy Blankets": { # increases blanket dps from 0.1 to 0.5
-                "cost": 500000,
+                "cost": 200000,
                 "purchased": False
             },
             "Fan Heaters": { # increases the dps of mini heaters and portable heaters by 1% for every 5 fans there are
@@ -58,6 +58,14 @@ class Game:
             },
             "Lava Chicken": { # for every 2 lava buckets, autoclicker cooldown goes down by 0.5s until 0.5s, then it goes to 0.3s and then 0.1s
                 "cost": 10000000,
+                "purchased": False
+            },
+            "Warmer Lamps": { # dps multiplied by half on total light bulbs
+                "cost": 10000000,
+                "purchased": False
+            },
+            "Better Dryers": { # dps increased by 1% of itself
+                "cost": 20000000,
                 "purchased": False
             }
         }
@@ -318,14 +326,15 @@ class Game:
     def get_permanent_upgrade_rect(self, index): # for every permanent upgrade button (columns of 4)
         UPGRADE_W = 300
         UPGRADE_H = 100
-        PADDING = 20
+        PADDING_X = 75
+        PADDING_Y = 20
         COL_H = 4
 
         row = index % COL_H
         col = index // COL_H
 
-        X = 50 + col * (UPGRADE_W + PADDING)
-        Y = 150 + row * (UPGRADE_H + PADDING)
+        X = 50 + col * (UPGRADE_W + PADDING_X)
+        Y = 150 + row * (UPGRADE_H + PADDING_Y)
         return pg.Rect(X, Y, UPGRADE_W, UPGRADE_H)
 
     def reset_game(self): # after ascending, resets everything except for the permanent upgrades
@@ -365,12 +374,18 @@ class Game:
         blanket_dps_mod = 1.0
         heater_fan_bonus_multiplier = 1.0 
         campfire_multiplier = 1.0
+        heat_lamp_multiplier = 1.0
 
         if self.permanent_upgrades["Superfans"]["purchased"]: # fan dps increased to 10
             fan_multiplier = 2.0
             
         if self.permanent_upgrades["Heavy Blankets"]["purchased"]: # blanket dps increased to 0.5
             blanket_dps_mod = 5.0 
+        
+        if self.permanent_upgrades["Warmer Lamps"]["purchased"]: # lamp  dps multiplied by half of the no. of light bulbs
+            light_bulb_count = self.upgrades["fan"].get("count", 0)
+            if light_bulb_count >= 4:
+                heat_lamp_multiplier = light_bulb_count // 2
 
         fan_count = self.upgrades["fan"].get("count", 0)
         if self.permanent_upgrades["Fan Heaters"]["purchased"]: # increases heater dps by 1% for every 5 fans
@@ -392,6 +407,8 @@ class Game:
                     base_dps += dps_contribution * fan_multiplier
                 elif upgrade["name"] == "Blanket":
                     base_dps += dps_contribution * blanket_dps_mod
+                elif upgrade["name"] == "Heat Lamp":
+                    base_dps += dps_contribution * heat_lamp_multiplier
                 elif upgrade["name"] == "Mini Heater" or upgrade["name"] == "Portable Heater":
                     base_dps += dps_contribution * heater_fan_bonus_multiplier
                 elif upgrade["name"] == "Bonfire":
@@ -403,6 +420,8 @@ class Game:
             light_bulb_dps *= 2 
             
         total_dps = base_dps + light_bulb_dps
+        if self.permanent_upgrades["Better Dryers"]["purchased"]: # increases dps by 1% of itself
+            total_dps *= 1.01
         self.dryness_per_second = total_dps
 
         # adding total dps to the total dryness
@@ -424,8 +443,12 @@ class Game:
             self.autoclick_timer += self.dt
             
             if self.autoclick_timer >= cooldown:
-                click_value = self.dryness_per_click
-                self.dryness += click_value
+                if self.permanent_upgrades["Thermotropism"]["purchased"]: # thermotropism applies to autoclicker
+                    click_value = self.dryness_per_click + (self.dryness_per_second * 0.01)
+                    self.dryness += click_value
+                else: # thermotropism not purchased yet
+                    click_value = self.dryness_per_click
+                    self.dryness += click_value
                 self.autoclick_timer = 0.0
                 
                 # autoclicker text for how much gained per autoclick
@@ -578,6 +601,10 @@ class Game:
                 upgrade_description = "Campfire's dps x2"
             elif key == "Lava Chicken":
                 upgrade_description = "-0.5 Autoclicker cooldown every 2 lava buckets"
+            elif key == "Warmer Lamps":
+                upgrade_description = "Heat Lamp's dps x half the no. of light bulbs"
+            elif key == "Better Dryers":
+                upgrade_description = "1% of DPS added to itself"
             
             self.draw_text(self.screen,  upgrade_description, 16, WHITE, rect.centerx, rect.top + 40)
             self.draw_text(self.screen, text_status, 18, YELLOW, rect.centerx, rect.top + 70)
