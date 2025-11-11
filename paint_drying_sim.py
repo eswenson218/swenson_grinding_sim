@@ -10,6 +10,11 @@ from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
 from os import path
 
+'''
+Sources:
+Clicking code from Aldric
+'''
+
 class Game:
     def __init__(self, selected_difficulty):
         pg.init()
@@ -18,6 +23,7 @@ class Game:
         pg.display.set_caption("Paint Drying Simulator")
         self.playing = True
 
+        # defining difficulty attributes
         if selected_difficulty == "Easy":
             self.game_duration = 30
             
@@ -86,21 +92,28 @@ class Game:
     # give the Game class a map property which uses the Map class to parse the level1.txt file
     # loads image file from images folder
     def load_data(self):
+        # where to get images
         self.game_folder = path.dirname(__file__)
         self.img_folder = path.join(self.game_folder, 'images')
+
+        # layout (from paint_drying_arena.txt)
         self.map = Map(path.join(self.game_folder, 'paint_drying_arena.txt'))
+
         self.player_img = pg.image.load(path.join(self.img_folder, 'Drill_Off.png')).convert_alpha()
         self.player_img_2 = pg.image.load(path.join(self.img_folder, 'Drill_On.png')).convert_alpha()
 
+        # static animal images
         self.pig_img = pg.image.load(path.join(self.img_folder, 'Pig_Not_Moving.png')).convert_alpha()
         self.cow_img = pg.image.load(path.join(self.img_folder, 'Cow_Not_Moving.png')).convert_alpha()
         self.chicken_img = pg.image.load(path.join(self.img_folder, 'Chicken_Not_Moving.png')).convert_alpha()
 
+        # spritesheets for animated animals
         self.pig_moving_img = pg.image.load(path.join(self.img_folder, 'Pig_Moving.png')).convert_alpha()
         self.cow_moving_img = pg.image.load(path.join(self.img_folder, 'Cow_Moving.png')).convert_alpha()
         self.chicken_moving_img = pg.image.load(path.join(self.img_folder, 'Chicken_Moving.png')).convert_alpha()
         self.sun_powerup_img = pg.image.load(path.join(self.img_folder, 'Sun_Powerup.png')).convert_alpha()
 
+        # possible paintings and their states
         self.painting_1_img = pg.image.load(path.join(self.img_folder, 'Painting_1.png')).convert_alpha()
         self.painting_2_img = pg.image.load(path.join(self.img_folder, 'Painting_2.png')).convert_alpha()
         self.painting_3_img = pg.image.load(path.join(self.img_folder, 'Painting_3.png')).convert_alpha()
@@ -114,12 +127,14 @@ class Game:
         self.painting_3_badly_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_3_badly_damaged.png')).convert_alpha()
         self.painting_4_badly_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_4_badly_damaged.png')).convert_alpha()
 
+        # background image and resizing it to fit the screen size
         self.background_img = pg.image.load(path.join(self.img_folder, 'paint_drying_sim_bg.png')).convert()
         self.background_img = pg.transform.scale(self.background_img, (WIDTH, HEIGHT))
 
     def new(self):
         # the sprite Groups allow us to update and draw sprites in grouped batches
         self.load_data()
+        # creating sprite groups
         self.all_sprites = pg.sprite.Group()
         self.all_mobs = pg.sprite.Group()
         self.all_coins = pg.sprite.Group()
@@ -127,6 +142,7 @@ class Game:
         self.all_targets = pg.sprite.Group()
         self.game_start_time = pg.time.get_ticks()
         
+        # creating spawn points for animals
         self.spawn_points = []
         map_width = len(self.map.data[0])
         map_height = len(self.map.data)
@@ -139,6 +155,7 @@ class Game:
             self.spawn_points.append((0, y))
             self.spawn_points.append((map_width - 1, y))
 
+        # creating the map
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == '1':
@@ -150,14 +167,15 @@ class Game:
                 elif tile == 'C':
                     Coin(self, col, row)
                 elif tile == 'P':
-                    self.player = Player(self, col, row)
+                    self.player = Player(self, col, row) # required for game to run
                 elif tile == 'M':
                     Mob(self, col, row)
-                elif tile == 'T':
+                elif tile == 'T': # painting targeted by animals
                     Target_Object(self, col, row)
 
     def run(self):
         while self.playing:
+            # game clock
             self.dt = self.clock.tick(FPS) / 1000
             # input
             self.events()
@@ -192,28 +210,29 @@ class Game:
         elapsed_seconds = (current_time - self.game_start_time) // 1000
         self.time = max(0, self.game_duration - elapsed_seconds)
         
-        if self.time <= 0:
+        if self.time <= 0: # adds winnig condition and text
             if len(self.all_targets.sprites()) > 0:
                 self.draw_text(self.screen, "YOU WIN!", 100, GREEN, WIDTH // 2, (HEIGHT // 2) - 50)
                 pg.display.flip()
-                pg.time.wait(3000)
+                pg.time.wait(3000) # wait 3 seconds before closing the screen
             self.playing = False
             return
         
+        # if having not reached the mob cap, spawns an animal at one of the spawn points
         if (current_time - self.spawn_timer >= self.spawn_delay and len(self.all_mobs) < self.max_mobs):
             spawn_x, spawn_y = random.choice(self.spawn_points)
             Mob(self, spawn_x, spawn_y)
             self.spawn_timer = current_time
 
-        if (current_time - self.coin_spawn_timer >= self.coin_spawn_delay and
-            len(self.all_coins) < self.max_coins):
-            rolled = random.random()
+        # attempts to spawn a coin
+        if (current_time - self.coin_spawn_timer >= self.coin_spawn_delay and len(self.all_coins) < self.max_coins):
+            rolled = random.random() # whether or not a coin spawn is randomized to to make coin spaws seem random
             if rolled < self.coin_spawn_chance:
                 spawn_px = random.randint(0, WIDTH - TILESIZE[0])
-                Coin(self, spawn_px, -TILESIZE[1], falling=True)
+                Coin(self, spawn_px, -TILESIZE[1], falling = True) # spawns a sun that falls down the screen
             self.coin_spawn_timer = current_time
 
-    def draw_text(self, surface, text, size, color, x, y):
+    def draw_text(self, surface, text, size, color, x, y): # makes drawing text easier
         font_name = pg.font.match_font('arial')
         font = pg.font.Font(font_name, size)
         text_surface = font.render(text, True, color)
@@ -222,18 +241,18 @@ class Game:
         surface.blit(text_surface, text_rect)
 
     def draw(self):
-        self.screen.blit(self.background_img, (0, 0))
+        self.screen.blit(self.background_img, (0, 0)) # draws the background image in the center of the screen (blit = draw)
 
         self.draw_text(self.screen, f"Time Left: {str(self.time)}s", 24, WHITE, WIDTH // 2, 20)
         
         painting = self.all_targets.sprites()[0] if self.all_targets else None
-        if painting:
+        if painting: # if the painting hasn't been destoyed, its info will be displayed
             health_text = f"Painting Health: {painting.health}"
-            health_color = RED if painting.health < 30 else (ORANGE if painting.health < 60 else GREEN)
+            health_color = RED if painting.health < 30 else (ORANGE if painting.health < 60 else GREEN) # color indicated how low health is (green = good amount, orange = getting low, red = very low)
             self.draw_text(self.screen, health_text, 32, health_color, WIDTH // 2, HEIGHT - 40)
         
         self.all_sprites.draw(self.screen)
-        pg.display.flip()
+        pg.display.flip() # updates the screen
 
 
 if __name__ == "__main__":

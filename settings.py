@@ -1,8 +1,7 @@
 # Settings for main.py
 
-difficulties_list = ["Easy", "Normal", "Hard", "Apocalypse", "Aldric", "Speed Challenge"]
-
-selected_difficulty = "Normal"
+difficulties_list = ["Easy", "Normal", "Hard", "Apocalypse", "Aldric", "Speed Challenge"] # for paint drying sim
+selected_difficulty = "Normal" # preset difficulty
 
 FPS = 30
 
