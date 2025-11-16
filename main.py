@@ -11,10 +11,6 @@ importing files to not overwrite the classes - Minglang (here's his github: http
 '''
 
 # import necessary modules
-import math
-import random
-import sys
-import pygame as pg
 from settings import *  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
@@ -25,7 +21,6 @@ import paint_drying_sim as pdsim
 
 import tkinter as tk
 from tkinter import messagebox
-from os import path
 
 # making the main window
 root = tk.Tk()
@@ -182,7 +177,6 @@ def options_screen(): # creates the options screen for paint drying sim
 def placeholder_cmd(): # secret dialog
     global clicks
     global countdown
-    clicker_button_shown = (clicks == 200)
     if clicks == 0:
         messagebox.showinfo("???","This doesn't seem to do anything...")
     elif clicks == 1:

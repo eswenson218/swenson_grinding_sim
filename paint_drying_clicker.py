@@ -1,9 +1,7 @@
 # Emmanuel Swenson
 
 # import necessary modules
-import math
 import random
-import sys
 import pygame as pg
 from settings import *  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)

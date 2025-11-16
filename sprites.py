@@ -6,7 +6,7 @@
 # Sources
 '''
 Mr. Cozort's code (https://github.com/ccozort/cozort__tower_of_the_apprentice)
-https://www.youtube.com/watch?v=Xzmpl5tnJnc
+scaling and rotating images in pygame - https://www.youtube.com/watch?v=Xzmpl5tnJnc
 '''
 
 import pygame as pg
