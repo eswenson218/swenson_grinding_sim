@@ -2,11 +2,12 @@
 
 # yay I can use github from VS CODE!
 
-# Scources
 '''
+Sources:
 https://www.geeksforgeeks.org/python/python-gui-tkinter/#
 https://www.geeksforgeeks.org/python/python-creating-a-button-in-tkinter/
 https://www.geeksforgeeks.org/python/python-tkinter-messagebox-widget/
+importing files to not overwrite the classes - Minglang (here's his github: https://github.com/minglangdu)
 '''
 
 # import necessary modules

@@ -10,6 +10,13 @@ from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
 from os import path
 
+'''
+Sources:
+Mr. Cozort's code (https://github.com/ccozort/cozort__tower_of_the_apprentice)
+Clicking code from Aldric
+Buttons - https://www.youtube.com/watch?v=8SzTzvrWaAA
+'''
+
 class Game:
     def __init__(self):
         pg.init() # initializing pygame
@@ -452,7 +459,7 @@ class Game:
                 self.autoclick_timer = 0.0
                 
                 # autoclicker text for how much gained per autoclick
-                FloatingText(self, f"Autoclick +{click_value:.2f}", 30, CYAN, 
+                FloatingText(self, f"Autoclick +{click_value:,.2f}", 30, CYAN, 
                              self.clicker_painting_rect.centerx + random.randint(-50, 50), 
                              self.clicker_painting_rect.centery + random.randint(-50, 50))
                 

@@ -1,5 +1,12 @@
+# Emmanuel Swenson
+
 from settings import *
 import pygame as pg
+
+'''
+Sources:
+Mr. Cozort's code (https://github.com/ccozort/cozort__tower_of_the_apprentice)
+'''
 
 # brings the map defined in the text files into a defined map
 from settings import *

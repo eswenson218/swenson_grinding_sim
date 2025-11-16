@@ -1,10 +1,11 @@
-# Created by Emmanuel Swenson with the help of ChatGPT
+# Created by Emmanuel Swenson
 
 # The sprites module contains all the sprites
 # Sprites include: player, mob - moving object
 
 # Sources
 '''
+Mr. Cozort's code (https://github.com/ccozort/cozort__tower_of_the_apprentice)
 https://www.youtube.com/watch?v=Xzmpl5tnJnc
 '''
 

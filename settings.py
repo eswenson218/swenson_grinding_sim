@@ -1,3 +1,5 @@
+# Emmanuel Swenson
+
 # Settings for main.py
 
 difficulties_list = ["Easy", "Normal", "Hard", "Apocalypse", "Aldric", "Speed Challenge"] # for paint drying sim
