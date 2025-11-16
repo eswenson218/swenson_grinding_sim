@@ -17,8 +17,11 @@ import pygame as pg
 from settings import *  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
-from paint_drying_clicker import *
-from paint_drying_sim import *
+
+# need to import these files with a different name so that their game classes don't overwrite each other
+import paint_drying_clicker as pdclicker
+import paint_drying_sim as pdsim
+
 import tkinter as tk
 from tkinter import messagebox
 from os import path
@@ -54,7 +57,7 @@ def load_main_menu(): # loads the games menu
     global pds_button, placeholder_button
     pds_button = tk.Button(root, # where it is placed
                    text="Paint Drying Sim", # what the button says
-                   command = options_screen, # what it does when clicked
+                   command = options_screen, # what it does when clicked (options screen, then runs paint_drying_sim.py with that difficulty)
                    activebackground="#669361", # when clicked bg
                    activeforeground="white", # when clicked text color
                    anchor="center", # positioning in the window
@@ -77,7 +80,7 @@ def load_main_menu(): # loads the games menu
 
     placeholder_button = tk.Button(root,
                                 text = "Placeholder",
-                                command = placeholder_cmd,
+                                command = placeholder_cmd, # secret dialog
                                 bd = 3,
                                 cursor = "question_arrow",
                                 font = ("Arial", 12),
@@ -88,7 +91,7 @@ def load_main_menu(): # loads the games menu
 
     paint_clicker_button = tk.Button(root,
                                      text = "Paint Drying Clicker",
-                                     command = run_game,
+                                     command = run_pdc, # paint_drying_clicker.py
                                      bd = 3,
                                      cursor = "spraycan",
                                      font = ("Arial", 12),
@@ -124,10 +127,21 @@ def get_selected_difficulty():
     global global_selected_difficulty
     global_selected_difficulty = difficulty_var.get()
 
-def run_game():
+def run_pds():
     root.withdraw() # hides root window
     try: # tries to run the game
-        g = Game(global_selected_difficulty)
+        g = pdsim.Game(global_selected_difficulty) # pdsim.Game uses the game class from paint_drying_sim.py
+        g.new()
+        g.run()
+    except: # if an error occurs, informs user instead of breaking
+        messagebox.showerror("Error", "Whoops. This didn't work.")
+    root.deiconify() # brings root window back into view
+    load_main_menu()
+
+def run_pdc():
+    root.withdraw() # hides root window
+    try: # tries to run the game
+        g = pdclicker.Game() # pdclicker.Game uses the game class from paint_drying_clicker.py
         g.new()
         g.run()
     except: # if an error occurs, informs user instead of breaking
@@ -137,7 +151,7 @@ def run_game():
 
 def launch_game(): # runs game with the selected difficulty
     get_selected_difficulty()
-    run_game()
+    run_pds()
 
 def options_screen(): # creates the options screen for paint drying sim
     clear_all_widgets()
