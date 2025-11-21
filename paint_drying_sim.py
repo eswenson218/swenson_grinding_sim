@@ -12,6 +12,7 @@ from os import path
 Sources:
 Mr. Cozort's code (https://github.com/ccozort/cozort__tower_of_the_apprentice)
 Clicking code from Aldric
+Music and sounds - https://pythonprogramming.net/adding-sounds-music-pygame/
 '''
 
 class Game:
@@ -95,6 +96,9 @@ class Game:
         self.game_folder = path.dirname(__file__)
         self.img_folder = path.join(self.game_folder, 'images')
 
+        # where to get sounds
+        self.sound_folder = path.join(self.game_folder, 'sounds')
+
         # layout (from paint_drying_arena.txt)
         self.map = Map(path.join(self.game_folder, 'paint_drying_arena.txt'))
 
@@ -130,9 +134,25 @@ class Game:
         self.background_img = pg.image.load(path.join(self.img_folder, 'paint_drying_sim_bg.png')).convert()
         self.background_img = pg.transform.scale(self.background_img, (WIDTH, HEIGHT))
 
-    def new(self):
+    def new(self, selected_difficulty):
         # the sprite Groups allow us to update and draw sprites in grouped batches
         self.load_data()
+
+        # playing bg music until the game ends (-1 means forever)
+        if selected_difficulty == "Easy":
+            pg.mixer.music.load(path.join(self.sound_folder, "song 1.wav"))
+        elif selected_difficulty == "Hard":
+            pg.mixer.music.load(path.join(self.sound_folder, "song 4.wav"))
+        elif selected_difficulty == "Apocalypse":
+            pg.mixer.music.load(path.join(self.sound_folder, "megalovania.wav"))
+        elif selected_difficulty == "Aldric":
+            pg.mixer.music.load(path.join(self.sound_folder, "spider dance.wav"))
+        elif selected_difficulty == "Speed Challenge":
+            pg.mixer.music.load(path.join(self.sound_folder, "song 3.wav"))
+        else: # if normal difficulty
+            pg.mixer.music.load(path.join(self.sound_folder, "song 2.wav"))
+        pg.mixer.music.play(-1)
+
         # creating sprite groups
         self.all_sprites = pg.sprite.Group()
         self.all_mobs = pg.sprite.Group()
@@ -257,5 +277,5 @@ class Game:
 if __name__ == "__main__":
     # creating an instance or instantiating the Game class
     g = Game(selected_difficulty)
-    g.new()
+    g.new(selected_difficulty)
     g.run()

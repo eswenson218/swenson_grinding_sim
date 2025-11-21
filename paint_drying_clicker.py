@@ -36,7 +36,7 @@ class Game:
                 "cost": 1000000,
                 "purchased": False
                 },
-            "Incandescence": { # doubles light bulb dps
+            "Incandescence": { # doubles light bulb
                 "cost": 250000,
                 "purchased": False
                 },
@@ -199,6 +199,9 @@ class Game:
 
         self.game_folder = path.dirname(__file__)
         self.img_folder = path.join(self.game_folder, 'images')
+        self.sound_folder = path.join(self.game_folder, 'sounds')
+
+        self.bg_music = pg.mixer.music.load(path.join(self.sound_folder, 'Transcendence.mp3'))
 
         self.clicker_painting_img = pg.image.load(path.join(self.img_folder, 'mona_lisa.png')).convert_alpha()
         self.clicker_painting_img = pg.transform.scale(self.clicker_painting_img, (288, 372))
@@ -216,6 +219,9 @@ class Game:
         self.load_data()
         self.all_sprites = pg.sprite.Group()
         self.all_floating_text = pg.sprite.Group()
+
+        # play bg music forever
+        pg.mixer.music.play(-1)
         
         # placing painting
         self.clicker_painting_rect = self.clicker_painting_img.get_rect()

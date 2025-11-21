@@ -29,9 +29,8 @@ root.config(bg="#232323")
 root.geometry("800x600")
 
 # difficulty for paint drying sim
-global_selected_difficulty = selected_difficulty
 difficulty_var = tk.StringVar(root)
-difficulty_var.set(global_selected_difficulty)
+difficulty_var.set(selected_difficulty)
 
 pds_button = None
 placeholder_button = None
@@ -127,7 +126,7 @@ def run_pds():
     root.withdraw() # hides root window
     try: # tries to run the game
         g = pdsim.Game(global_selected_difficulty) # pdsim.Game uses the game class from paint_drying_sim.py
-        g.new()
+        g.new(global_selected_difficulty)
         g.run()
     except: # if an error occurs, informs user instead of breaking
         messagebox.showerror("Error", "Whoops. This didn't work.")
