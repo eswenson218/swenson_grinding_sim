@@ -11,6 +11,7 @@ importing files to not overwrite the classes - Minglang (here's his github: http
 '''
 
 # import necessary modules
+import pygame as pg
 from settings import *  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
@@ -47,6 +48,11 @@ def clear_all_widgets(): # clears the window
         tk_widget.destroy()
 
 def load_main_menu(): # loads the games menu
+    pg.mixer.init()
+    game_folder = path.dirname(__file__)
+    sound_folder = path.join(game_folder, 'sounds')
+    bg_music = pg.mixer.music.load(path.join(sound_folder, 'main menu bg music.mp3'))
+    pg.mixer.music.play(-1)
     clear_all_widgets()
     root.title("Game Selector")
     global pds_button, placeholder_button
@@ -123,6 +129,7 @@ def get_selected_difficulty():
     global_selected_difficulty = difficulty_var.get()
 
 def run_pds():
+    pg.mixer.music.pause()
     root.withdraw() # hides root window
     try: # tries to run the game
         g = pdsim.Game(global_selected_difficulty) # pdsim.Game uses the game class from paint_drying_sim.py
@@ -134,6 +141,7 @@ def run_pds():
     load_main_menu()
 
 def run_pdc():
+    pg.mixer.music.pause()
     root.withdraw() # hides root window
     try: # tries to run the game
         g = pdclicker.Game() # pdclicker.Game uses the game class from paint_drying_clicker.py

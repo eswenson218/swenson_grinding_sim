@@ -121,10 +121,12 @@ class Game:
         self.painting_2_img = pg.image.load(path.join(self.img_folder, 'Painting_2.png')).convert_alpha()
         self.painting_3_img = pg.image.load(path.join(self.img_folder, 'Painting_3.png')).convert_alpha()
         self.painting_4_img = pg.image.load(path.join(self.img_folder, 'Painting_4.png')).convert_alpha()
+
         self.painting_1_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_1_damaged.png')).convert_alpha()
         self.painting_2_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_2_damaged.png')).convert_alpha()
         self.painting_3_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_3_damaged.png')).convert_alpha()
         self.painting_4_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_4_damaged.png')).convert_alpha()
+        
         self.painting_1_badly_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_1_badly_damaged.png')).convert_alpha()
         self.painting_2_badly_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_2_badly_damaged.png')).convert_alpha()
         self.painting_3_badly_damaged_img = pg.image.load(path.join(self.img_folder, 'Painting_3_badly_damaged.png')).convert_alpha()
