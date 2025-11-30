@@ -232,7 +232,7 @@ class Game:
                     if mob.rect.collidepoint(mouse_pos):
                         self.poof.play()
                         mob.kill()
-                # Check if any coin (powerup) was clicked
+                # Check if any powerup was clicked
                 for coin in list(self.all_coins):
                     if coin.rect.collidepoint(mouse_pos):
                         # Activate powerup and remove it
