@@ -26,7 +26,7 @@ class Game:
         self.current_screen = "game" # what screen to be showed
 
         # these will not be reset
-        self.ascension_count = 0
+        self.ascension_count = 10
         self.ascension_cost = 10000
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
@@ -78,7 +78,7 @@ class Game:
         self.autoclick_timer = 0.0
         
         # these will be reset every ascension
-        self.dryness = 0
+        self.dryness = 10000000000000000000000000
         self.dryness_per_click = 1
         self.dryness_per_second = 0.0
         self.upgrades = { # 2D dictionary using key value pairs to store data about upgrades
@@ -201,8 +201,30 @@ class Game:
         self.img_folder = path.join(self.game_folder, 'images')
         self.sound_folder = path.join(self.game_folder, 'sounds')
 
+        # bg music
         self.bg_music = pg.mixer.music.load(path.join(self.sound_folder, 'Transcendence.mp3'))
+        self.bg_music = pg.mixer.music.set_volume(0.1)
+        
+        # sfx
+        self.click_sound = pg.mixer.Sound(path.join(self.sound_folder, 'mouse click.mp3'))
+        self.click_sound.set_volume(0.1)
 
+        self.fan_noise = pg.mixer.Sound(path.join(self.sound_folder, 'fan noise.mp3'))
+        self.fan_noise.set_volume(0.2)
+
+        self.heater_noise = pg.mixer.Sound(path.join(self.sound_folder, 'fire crackles.mp3'))
+        self.heater_noise.set_volume(0.2)
+
+        self.campfire_noise = pg.mixer.Sound(path.join(self.sound_folder, 'campfire.mp3'))
+        self.campfire_noise.set_volume(0.3)
+
+        self.lava_noise = pg.mixer.Sound(path.join(self.sound_folder, 'lava.mp3'))
+        self.lava_noise.set_volume(0.4)
+
+        self.song = pg.mixer.Sound(path.join(self.sound_folder,'Lava Chicken - Hyper Potions.mp3'))
+        self.song.set_volume(0.5)
+
+        # sprites
         self.clicker_painting_img = pg.image.load(path.join(self.img_folder, 'mona_lisa.png')).convert_alpha()
         self.clicker_painting_img = pg.transform.scale(self.clicker_painting_img, (288, 372))
 
@@ -248,6 +270,7 @@ class Game:
             if event.type == pg.QUIT: # closing the game loop
                 self.playing = False
             if event.type == pg.MOUSEBUTTONDOWN:
+                self.click_sound.play()
                 mouse_pos = pg.mouse.get_pos() # gets location of mouse when clicked
                 if self.current_screen == "game":
                     if self.clicker_painting_rect.collidepoint(mouse_pos): # if painting is clicked
@@ -280,6 +303,10 @@ class Game:
                             perm_rect = self.get_permanent_upgrade_rect(i)
                             if perm_rect.collidepoint(mouse_pos):
                                 self.buy_permanent_upgrade(key)
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_p:
+                    if self.permanent_upgrades['Lava Chicken']['purchased']:
+                        self.song.play()
     
     def click_painting(self): # logic for giving dryness when the painting is clicked
         dps_bonus = 0
@@ -304,6 +331,16 @@ class Game:
             
             if is_dps_upgrade: # if dps upgrade, count goes up b/c you can buy multiple
                 upgrade["count"] += 1
+
+                # activating sound for certain items when purchased for the first time
+                if upgrade["name"] == "Fan" and upgrade["count"] == 1:
+                    self.fan_noise.play(-1)
+                elif (upgrade["name"] == "Mini Heater" or upgrade == "Portable Heater") and upgrade["count"] == 1:
+                    self.heater_noise.play(-1)
+                elif upgrade["name"] == "Campfire" and upgrade["count"] == 1:
+                    self.campfire_noise.play(-1)
+                elif upgrade["name"] == "Lava Bucket" and upgrade ["count"] == 1:
+                    self.lava_noise.play(-1)
                 
                 # increases cost by 5% of previous to the nearest whole number
                 new_cost = upgrade["cost"] * (1 + 0.05 * upgrade["count"])
@@ -454,6 +491,7 @@ class Game:
             self.autoclick_timer += self.dt
             
             if self.autoclick_timer >= cooldown:
+                self.click_sound.play()
                 if self.permanent_upgrades["Thermotropism"]["purchased"]: # thermotropism applies to autoclicker
                     click_value = self.dryness_per_click + (self.dryness_per_second * 0.01)
                     self.dryness += click_value
