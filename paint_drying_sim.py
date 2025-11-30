@@ -103,6 +103,9 @@ class Game:
         self.win = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
         self.win.set_volume(0.5)
 
+        self.lose = pg.mixer.Sound(path.join(self.sound_folder, 'lose.mp3'))
+        self.lose.set_volume(0.4)
+
         self.poof = pg.mixer.Sound(path.join(self.sound_folder, 'poof.mp3'))
         self.poof.set_volume(0.5)
 
@@ -253,6 +256,13 @@ class Game:
                 pg.time.wait(3000) # wait 3 seconds before closing the screen
             self.playing = False
             return
+        
+        if len(self.all_targets.sprites()) <= 0: # lose screen
+            pg.mixer.music.stop()
+            self.lose.play()
+            self.draw_text(self.screen, "YOU LOSE", 100, RED, WIDTH // 2, (HEIGHT // 2) - 50)
+            pg.display.flip()
+            pg.time.wait(3000)
         
         # if having not reached the mob cap, spawns an animal at one of the spawn points
         if (current_time - self.spawn_timer >= self.spawn_delay and len(self.all_mobs) < self.max_mobs):

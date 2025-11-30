@@ -52,7 +52,7 @@ def load_main_menu(): # loads the games menu
     game_folder = path.dirname(__file__)
     sound_folder = path.join(game_folder, 'sounds')
     pg.mixer.music.load(path.join(sound_folder, 'main menu bg music.mp3'))
-    pg.mixer.music.set_volume(0.2)
+    pg.mixer.music.set_volume(0.7)
     pg.mixer.music.play(-1)
     clear_all_widgets()
     root.title("Game Selector")

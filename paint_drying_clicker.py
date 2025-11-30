@@ -26,7 +26,7 @@ class Game:
         self.current_screen = "game" # what screen to be showed
 
         # these will not be reset
-        self.ascension_count = 1
+        self.ascension_count = 0
         self.ascension_cost = 10000
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
@@ -203,11 +203,20 @@ class Game:
 
         # bg music
         self.bg_music = pg.mixer.music.load(path.join(self.sound_folder, 'Transcendence.mp3'))
-        self.bg_music = pg.mixer.music.set_volume(0.1)
+        self.bg_music = pg.mixer.music.set_volume(0.08)
         
         # sfx
         self.click_sound = pg.mixer.Sound(path.join(self.sound_folder, 'mouse click.mp3'))
-        self.click_sound.set_volume(0.1)
+        self.click_sound.set_volume(0.02)
+
+        self.blanket_noise = pg.mixer.Sound(path.join(self.sound_folder, 'poof.mp3'))
+        self.blanket_noise.set_volume(0.07)
+
+        self.bulb_buzz = pg.mixer.Sound(path.join(self.sound_folder, 'light bulb buzz.mp3'))
+        self.bulb_buzz.set_volume(0.5)
+
+        self.lamp_on = pg.mixer.Sound(path.join(self.sound_folder, 'lamp switch.mp3'))
+        self.lamp_on.set_volume(0.95)
 
         self.fan_noise = pg.mixer.Sound(path.join(self.sound_folder, 'fan noise.mp3'))
         self.fan_noise.set_volume(0.2)
@@ -221,11 +230,14 @@ class Game:
         self.lava_noise = pg.mixer.Sound(path.join(self.sound_folder, 'lava.mp3'))
         self.lava_noise.set_volume(0.4)
 
+        self.ascend_noise = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
+        self.ascend_noise.set_volume(0.3)
+
         self.song = pg.mixer.Sound(path.join(self.sound_folder, 'Lava Chicken - Hyper Potions.mp3'))
-        self.song.set_volume(0.5)
+        self.song.set_volume(0.7)
 
         self.rickroll = pg.mixer.Sound(path.join(self.sound_folder, 'rickroll.wav'))
-        self.song.set_volume(0.7)
+        self.rickroll.set_volume(0.9)
 
         # sprites
         self.clicker_painting_img = pg.image.load(path.join(self.img_folder, 'mona_lisa.png')).convert_alpha()
@@ -307,7 +319,7 @@ class Game:
                             if perm_rect.collidepoint(mouse_pos):
                                 self.buy_permanent_upgrade(key)
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_p:
+                if event.key == pg.K_l:
                     if self.permanent_upgrades['Lava Chicken']['purchased']:
                         self.song.play()
                 if event.key == pg.K_r:
@@ -338,9 +350,15 @@ class Game:
                 upgrade["count"] += 1
 
                 # activating sound for certain items when purchased for the first time
-                if upgrade["name"] == "Fan" and upgrade["count"] == 1:
+                if upgrade["name"] == "Blanket":
+                    self.blanket_noise.play()
+                elif upgrade["name"] == "Light Bulb" and upgrade["count"] == 1:
+                    self.bulb_buzz.play(-1)
+                elif upgrade["name"] == "Fan" and upgrade["count"] == 1:
                     self.fan_noise.play(-1)
-                elif (upgrade["name"] == "Mini Heater" or upgrade == "Portable Heater") and upgrade["count"] == 1:
+                elif upgrade["name"] == "Lava Lamp":
+                    self.lamp_on.play()
+                elif (upgrade["name"] == "Mini Heater" or upgrade["name"] == "Portable Heater") and upgrade["count"] == 1:
                     self.heater_noise.play(-1)
                 elif upgrade["name"] == "Campfire" and upgrade["count"] == 1:
                     self.campfire_noise.play(-1)
@@ -403,6 +421,7 @@ class Game:
     
     def buy_ascension(self):
         if self.dryness >= self.ascension_cost:
+            self.ascend_noise.play()
             self.ascension_count += 1
             self.ascension_cost *= 10
             self.current_screen = "game"
