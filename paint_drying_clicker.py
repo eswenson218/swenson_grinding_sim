@@ -26,7 +26,7 @@ class Game:
         self.current_screen = "game" # what screen to be showed
 
         # these will not be reset
-        self.ascension_count = 10
+        self.ascension_count = 1
         self.ascension_cost = 10000
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
@@ -78,7 +78,7 @@ class Game:
         self.autoclick_timer = 0.0
         
         # these will be reset every ascension
-        self.dryness = 10000000000000000000000000
+        self.dryness = 0
         self.dryness_per_click = 1
         self.dryness_per_second = 0.0
         self.upgrades = { # 2D dictionary using key value pairs to store data about upgrades
@@ -221,8 +221,11 @@ class Game:
         self.lava_noise = pg.mixer.Sound(path.join(self.sound_folder, 'lava.mp3'))
         self.lava_noise.set_volume(0.4)
 
-        self.song = pg.mixer.Sound(path.join(self.sound_folder,'Lava Chicken - Hyper Potions.mp3'))
+        self.song = pg.mixer.Sound(path.join(self.sound_folder, 'Lava Chicken - Hyper Potions.mp3'))
         self.song.set_volume(0.5)
+
+        self.rickroll = pg.mixer.Sound(path.join(self.sound_folder, 'rickroll.wav'))
+        self.song.set_volume(0.7)
 
         # sprites
         self.clicker_painting_img = pg.image.load(path.join(self.img_folder, 'mona_lisa.png')).convert_alpha()
@@ -307,6 +310,8 @@ class Game:
                 if event.key == pg.K_p:
                     if self.permanent_upgrades['Lava Chicken']['purchased']:
                         self.song.play()
+                if event.key == pg.K_r:
+                    self.rickroll.play()
     
     def click_painting(self): # logic for giving dryness when the painting is clicked
         dps_bonus = 0

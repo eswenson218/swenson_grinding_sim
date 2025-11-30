@@ -153,6 +153,7 @@ class Game:
             pg.mixer.music.load(path.join(self.sound_folder, "song 3.wav"))
         else: # if normal difficulty
             pg.mixer.music.load(path.join(self.sound_folder, "song 2.wav"))
+        pg.mixer.music.set_volume(0.5)
         pg.mixer.music.play(-1)
 
         # creating sprite groups
@@ -233,6 +234,7 @@ class Game:
         
         if self.time <= 0: # adds winnig condition and text
             if len(self.all_targets.sprites()) > 0:
+                pg.mixer.music.stop()
                 self.draw_text(self.screen, "YOU WIN!", 100, GREEN, WIDTH // 2, (HEIGHT // 2) - 50)
                 pg.display.flip()
                 pg.time.wait(3000) # wait 3 seconds before closing the screen
