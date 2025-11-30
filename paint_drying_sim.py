@@ -99,6 +99,16 @@ class Game:
         # where to get sounds
         self.sound_folder = path.join(self.game_folder, 'sounds')
 
+        # sfx
+        self.win = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
+        self.win.set_volume(0.5)
+
+        self.poof = pg.mixer.Sound(path.join(self.sound_folder, 'poof.mp3'))
+        self.poof.set_volume(0.5)
+
+        self.powerup = pg.mixer.Sound(path.join(self.sound_folder, 'powerup collect.mp3'))
+        self.powerup.set_volume(0.1)
+
         # layout (from paint_drying_arena.txt)
         self.map = Map(path.join(self.game_folder, 'paint_drying_arena.txt'))
 
@@ -217,11 +227,13 @@ class Game:
                 # Check if any mob was clicked
                 for mob in self.all_mobs:
                     if mob.rect.collidepoint(mouse_pos):
+                        self.poof.play()
                         mob.kill()
                 # Check if any coin (powerup) was clicked
                 for coin in list(self.all_coins):
                     if coin.rect.collidepoint(mouse_pos):
                         # Activate powerup and remove it
+                        self.powerup.play()
                         coin.activate()
 
     def update(self):
@@ -235,6 +247,7 @@ class Game:
         if self.time <= 0: # adds winnig condition and text
             if len(self.all_targets.sprites()) > 0:
                 pg.mixer.music.stop()
+                self.win.play()
                 self.draw_text(self.screen, "YOU WIN!", 100, GREEN, WIDTH // 2, (HEIGHT // 2) - 50)
                 pg.display.flip()
                 pg.time.wait(3000) # wait 3 seconds before closing the screen
