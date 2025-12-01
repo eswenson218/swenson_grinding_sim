@@ -283,73 +283,73 @@ def placeholder_cmd(): # secret dialog
     elif clicks == 157:
         messagebox.showinfo("???","My name is No Name.")
     elif clicks == 158:
-        messagebox.showinfo("???","Actually I don't have a name, hence 'No Name'.")
+        messagebox.showinfo("No Name","Actually I don't have a name, hence 'No Name'.")
     elif clicks == 159:
-        messagebox.showinfo("???","This is the best name - to not have a name.")
+        messagebox.showinfo("No Name","This is the best name - to not have a name.")
     elif clicks == 160:
-        messagebox.showinfo("???","Think about it. It's impossible to make fun of my name because I don't have one!")
+        messagebox.showinfo("No Name","Think about it. It's impossible to make fun of my name because I don't have one!")
     elif clicks == 161:
-        messagebox.showinfo("???","My mother was a genius for that! Just like me!")
+        messagebox.showinfo("No Name","My mother was a genius for that! Just like me!")
     elif clicks == 162:
-        messagebox.showinfo("???","I guess she got that from me.")
+        messagebox.showinfo("No Name","I guess she got that from me.")
     elif clicks == 163:
-        messagebox.showinfo("???","Actually, that doesn't make any sense...")
+        messagebox.showinfo("No Name","Actually, that doesn't make any sense...")
     elif clicks == 164:
-        messagebox.showinfo("???","...I mean of course it does, because I'm a genius! Haha yeah...")
+        messagebox.showinfo("No Name","...I mean of course it does, because I'm a genius! Haha yeah...")
     elif clicks == 165:
-        messagebox.askquestion("???","Anyways, I'm getting tired. Are you?")
+        messagebox.askquestion("No Name","Anyways, I'm getting tired. Are you?")
     elif clicks == 166:
-        messagebox.showinfo("???","I'm gonna go to sleep soon. You should too.")
+        messagebox.showinfo("No Name","I'm gonna go to sleep soon. You should too.")
     elif clicks == 167:
-        messagebox.showinfo("???","Here take this cake.")
+        messagebox.showinfo("No Name","Here take this cake.")
     elif clicks == 168:
-        messagebox.askquestion("???","You say there's no cake?")
+        messagebox.askquestion("No Name","You say there's no cake?")
     elif clicks == 169:
-        messagebox.showinfo("???","That's because the cake is a lie.")
+        messagebox.showinfo("No Name","That's because the cake is a lie.")
     elif clicks == 170:
-        messagebox.showinfo("???","I know. That was soooo funny.")
+        messagebox.showinfo("No Name","I know. That was soooo funny.")
     elif clicks == 171:
-        messagebox.showinfo("???","I hope that made you happy.")
+        messagebox.showinfo("No Name","I hope that made you happy.")
     elif clicks == 172:
-        messagebox.showinfo("???","Now, goodbye.")
+        messagebox.showinfo("No Name","Now, goodbye.")
     elif clicks == 173:
-        messagebox.showinfo("???","This is the end.")
+        messagebox.showinfo("No Name","This is the end.")
     elif clicks == 174:
-        messagebox.showinfo("???","This is the end of our conversation.")
+        messagebox.showinfo("No Name","This is the end of our conversation.")
     elif clicks == 175:
-        messagebox.showinfo("???","It's over!")
+        messagebox.showinfo("No Name","It's over!")
     elif clicks == 176:
-        messagebox.showinfo("???","It is all over...")
+        messagebox.showinfo("No Name","It is all over...")
     elif clicks == 178:
-        messagebox.showinfo("???","You can stop talking to me now.")
+        messagebox.showinfo("No Name","You can stop talking to me now.")
     elif clicks == 179:
-        messagebox.showinfo("???","You got exactly what you wanted from me, and it is now over.")
+        messagebox.showinfo("No Name","You got exactly what you wanted from me, and it is now over.")
     elif clicks == 180:
-        messagebox.showinfo("???","If you want to thank anyone, this is the time.")
+        messagebox.showinfo("No Name","If you want to thank anyone, this is the time.")
     elif clicks == 181:
-        messagebox.showinfo("???","Because it is done - it is over.")
+        messagebox.showinfo("No Name","Because it is done - it is over.")
     elif clicks == 182:
-        messagebox.showinfo("???","Seriously, it's over.")
+        messagebox.showinfo("No Name","Seriously, it's over.")
     elif clicks == 183:
-        messagebox.showinfo("???","There is nothing else.")
+        messagebox.showinfo("No Name","There is nothing else.")
     elif clicks >= 184 and clicks <= 193:
-        messagebox.showinfo("???","...")
+        messagebox.showinfo("Is it really over?","...")
     elif clicks == 194:
-        messagebox.showinfo("???","Hmm... you're still here.")
+        messagebox.showinfo("No Name","Hmm... you're still here.")
     elif clicks == 195:
-        messagebox.showinfo("???","Man, you are very dedicated. This was a very long conversation.")
+        messagebox.showinfo("No Name","Man, you are very dedicated. This was a very long conversation.")
     elif clicks == 196:
-        messagebox.showinfo("???","I don't know what to say.")
+        messagebox.showinfo("No Name","I don't know what to say.")
     elif clicks == 197:
-        messagebox.showinfo("???","I'm sorry to say this, but there is nothing here.")
+        messagebox.showinfo("No Name","I'm sorry to say this, but there is nothing here.")
     elif clicks == 198:
-        messagebox.showinfo("???","This is actually the end. I swear.")
+        messagebox.showinfo("No Name","This is actually the end. I swear.")
     elif clicks == 199:
-        messagebox.showinfo("???","This is my final goodbye!")
+        messagebox.showinfo("No Name","This is my final goodbye!")
     elif clicks == 200:
-        messagebox.showinfo("???","Goodbye!")
+        messagebox.showinfo("No Name","Goodbye!")
     else:
-        messagebox.showinfo("???","No one responds... I guess the conversation really is over.")
+        messagebox.showinfo("Conversation Over (For Real)","No one responds... I guess the conversation really is over.")
 
     clicks += 1
     

@@ -307,11 +307,8 @@ class Coin(Sprite):
         self.game.time = max(0, self.game.time - 5)
         painting = self.game.all_targets.sprites()[0] if self.game.all_targets else None
         if painting:
-            try:
-                max_hp = getattr(painting, 'max_health', 100)
-                painting.health = min(max_hp, painting.health + 5)
-            except Exception:
-                pass
+            max_hp = getattr(painting, 'max_health', 100)
+            painting.health = min(max_hp, painting.health + 5)
         self.kill()
 
     def update(self):

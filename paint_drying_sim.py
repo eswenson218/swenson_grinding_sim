@@ -101,10 +101,10 @@ class Game:
 
         # sfx
         self.win = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
-        self.win.set_volume(0.5)
+        self.win.set_volume(0.4)
 
         self.lose = pg.mixer.Sound(path.join(self.sound_folder, 'lose.mp3'))
-        self.lose.set_volume(0.4)
+        self.lose.set_volume(0.2)
 
         self.poof = pg.mixer.Sound(path.join(self.sound_folder, 'poof.mp3'))
         self.poof.set_volume(0.5)
