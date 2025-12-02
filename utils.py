@@ -9,6 +9,8 @@ Mr. Cozort's code (https://github.com/ccozort/cozort__tower_of_the_apprentice)
 from settings import *
 import pygame as pg
 
+print(pg.font.get_fonts())
+
 # Object or class
 
 class Map:

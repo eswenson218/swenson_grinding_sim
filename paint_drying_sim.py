@@ -88,6 +88,10 @@ class Game:
         self.coin_spawn_timer = 0
         self.game_start_time = 0
 
+        self.total_clicks = 0
+        self.accurate_clicks = 0
+        self.accuracy_score = 0.0
+
     # sets up a game folder directory path using the current folder containing THIS file
     # give the Game class a map property which uses the Map class to parse the level1.txt file
     # loads image file from images folder
@@ -166,7 +170,7 @@ class Game:
             pg.mixer.music.load(path.join(self.sound_folder, "song 3.wav"))
         else: # if normal difficulty
             pg.mixer.music.load(path.join(self.sound_folder, "song 2.wav"))
-        pg.mixer.music.set_volume(0.5)
+        pg.mixer.music.set_volume(0.4)
         pg.mixer.music.play(-1)
 
         # creating sprite groups
@@ -225,6 +229,7 @@ class Game:
             if event.type == pg.QUIT:
                 self.playing = False
             if event.type == pg.MOUSEBUTTONDOWN:
+                self.total_clicks += 1
                 # Get mouse position
                 mouse_pos = pg.mouse.get_pos()
                 # Check if any mob was clicked
@@ -232,12 +237,14 @@ class Game:
                     if mob.rect.collidepoint(mouse_pos):
                         self.poof.play()
                         mob.kill()
+                        self.accurate_clicks += 1
                 # Check if any powerup was clicked
                 for coin in list(self.all_coins):
                     if coin.rect.collidepoint(mouse_pos):
                         # Activate powerup and remove it
                         self.powerup.play()
                         coin.activate()
+                        self.accurate_clicks += 1
 
     def update(self):
         # update all sprites
@@ -249,18 +256,28 @@ class Game:
         
         if self.time <= 0: # adds winnig condition and text
             if len(self.all_targets.sprites()) > 0:
+                if self.total_clicks > 0:
+                    self.accuracy_score = (self.accurate_clicks / self.total_clicks) * 100
+                else:
+                    self.accuracy_score = 0
                 pg.mixer.music.stop()
                 self.win.play()
                 self.draw_text(self.screen, "YOU WIN!", 100, GREEN, WIDTH // 2, (HEIGHT // 2) - 50)
+                self.draw_text(self.screen, f"Accuracy: {self.accuracy_score:.2f}%", 50, WHITE, WIDTH // 2, (HEIGHT // 2) + 50)
                 pg.display.flip()
                 pg.time.wait(3000) # wait 3 seconds before closing the screen
             self.playing = False
             return
         
         if len(self.all_targets.sprites()) <= 0: # lose screen
+            if self.total_clicks > 0:
+                self.accuracy_score = (self.accurate_clicks / self.total_clicks) * 100
+            else:
+                self.accuracy_score = 0
             pg.mixer.music.stop()
             self.lose.play()
             self.draw_text(self.screen, "YOU LOSE", 100, RED, WIDTH // 2, (HEIGHT // 2) - 50)
+            self.draw_text(self.screen, f"Accuracy: {self.accuracy_score:.2f}%", 50, WHITE, WIDTH // 2, (HEIGHT // 2) + 50)
             pg.display.flip()
             pg.time.wait(3000)
         
