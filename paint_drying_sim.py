@@ -89,10 +89,7 @@ class Game:
         self.sun_spawn_timer = 0
         self.game_start_time = 0
 
-<<<<<<< HEAD
         # for accuracy score
-=======
->>>>>>> bec7a4158149e2efe59bbfd3a99e0b76127accbf
         self.total_clicks = 0
         self.accurate_clicks = 0
         self.accuracy_score = 0.0
