@@ -54,7 +54,7 @@ class Game:
             self.coin_spawn_chance = 0.17
             self.max_coins = 1
         
-        elif selected_difficulty == "Aldric":
+        elif selected_difficulty == "Apocalypse +":
             self.game_duration = 120
 
             self.max_mobs = 20
@@ -84,9 +84,15 @@ class Game:
             self.coin_spawn_chance = 0.5
             self.max_coins = 2
 
+        # for spawn timers of mobs and suns
         self.spawn_timer = 0
-        self.coin_spawn_timer = 0
+        self.sun_spawn_timer = 0
         self.game_start_time = 0
+
+        # for accuracy score
+        self.total_clicks = 0
+        self.accurate_clicks = 0
+        self.accuracy_score = 0.0
 
     # sets up a game folder directory path using the current folder containing THIS file
     # give the Game class a map property which uses the Map class to parse the level1.txt file
@@ -160,13 +166,13 @@ class Game:
             pg.mixer.music.load(path.join(self.sound_folder, "song 4.wav"))
         elif selected_difficulty == "Apocalypse":
             pg.mixer.music.load(path.join(self.sound_folder, "megalovania.wav"))
-        elif selected_difficulty == "Aldric":
+        elif selected_difficulty == "Apocalypse +":
             pg.mixer.music.load(path.join(self.sound_folder, "spider dance.wav"))
         elif selected_difficulty == "Speed Challenge":
             pg.mixer.music.load(path.join(self.sound_folder, "song 3.wav"))
         else: # if normal difficulty
             pg.mixer.music.load(path.join(self.sound_folder, "song 2.wav"))
-        pg.mixer.music.set_volume(0.5)
+        pg.mixer.music.set_volume(0.4)
         pg.mixer.music.play(-1)
 
         # creating sprite groups
@@ -225,6 +231,7 @@ class Game:
             if event.type == pg.QUIT:
                 self.playing = False
             if event.type == pg.MOUSEBUTTONDOWN:
+                self.total_clicks += 1
                 # Get mouse position
                 mouse_pos = pg.mouse.get_pos()
                 # Check if any mob was clicked
@@ -232,12 +239,14 @@ class Game:
                     if mob.rect.collidepoint(mouse_pos):
                         self.poof.play()
                         mob.kill()
+                        self.accurate_clicks += 1
                 # Check if any powerup was clicked
                 for coin in list(self.all_coins):
                     if coin.rect.collidepoint(mouse_pos):
                         # Activate powerup and remove it
                         self.powerup.play()
                         coin.activate()
+                        self.accurate_clicks += 1
 
     def update(self):
         # update all sprites
@@ -249,18 +258,28 @@ class Game:
         
         if self.time <= 0: # adds winnig condition and text
             if len(self.all_targets.sprites()) > 0:
+                if self.total_clicks > 0:
+                    self.accuracy_score = (self.accurate_clicks / self.total_clicks) * 100
+                else:
+                    self.accuracy_score = 0
                 pg.mixer.music.stop()
                 self.win.play()
                 self.draw_text(self.screen, "YOU WIN!", 100, GREEN, WIDTH // 2, (HEIGHT // 2) - 50)
+                self.draw_text(self.screen, f"Accuracy: {self.accuracy_score:.2f}%", 50, WHITE, WIDTH // 2, (HEIGHT // 2) + 50)
                 pg.display.flip()
                 pg.time.wait(3000) # wait 3 seconds before closing the screen
             self.playing = False
             return
         
         if len(self.all_targets.sprites()) <= 0: # lose screen
+            if self.total_clicks > 0:
+                self.accuracy_score = (self.accurate_clicks / self.total_clicks) * 100
+            else:
+                self.accuracy_score = 0
             pg.mixer.music.stop()
             self.lose.play()
             self.draw_text(self.screen, "YOU LOSE", 100, RED, WIDTH // 2, (HEIGHT // 2) - 50)
+            self.draw_text(self.screen, f"Accuracy: {self.accuracy_score:.2f}%", 50, WHITE, WIDTH // 2, (HEIGHT // 2) + 50)
             pg.display.flip()
             pg.time.wait(3000)
         
@@ -270,13 +289,13 @@ class Game:
             Mob(self, spawn_x, spawn_y)
             self.spawn_timer = current_time
 
-        # attempts to spawn a coin
-        if (current_time - self.coin_spawn_timer >= self.coin_spawn_delay and len(self.all_coins) < self.max_coins):
-            rolled = random.random() # whether or not a coin spawn is randomized to to make coin spaws seem random
+        # attempts to spawn a sun
+        if (current_time - self.sun_spawn_timer >= self.coin_spawn_delay and len(self.all_coins) < self.max_coins):
+            rolled = random.random() # whether or not a sun spawn is randomized to to make sun spaws seem random
             if rolled < self.coin_spawn_chance:
                 spawn_px = random.randint(0, WIDTH - TILESIZE[0])
                 Coin(self, spawn_px, -TILESIZE[1], falling = True) # spawns a sun that falls down the screen
-            self.coin_spawn_timer = current_time
+            self.sun_spawn_timer = current_time
 
     def draw_text(self, surface, text, size, color, x, y): # makes drawing text easier
         font_name = pg.font.match_font('arial')

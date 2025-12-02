@@ -81,7 +81,7 @@ def load_main_menu(): # loads the games menu
     pds_button.pack(padx = 10, pady = 10) # .pack makes the button appear on the window (.grid can also be used)
 
     placeholder_button = tk.Button(root,
-                                text = "Placeholder",
+                                text = "Mysterious Button",
                                 command = placeholder_cmd, # secret dialog
                                 bd = 3,
                                 cursor = "question_arrow",
