@@ -22,11 +22,12 @@ import paint_drying_sim as pdsim
 
 import tkinter as tk
 from tkinter import messagebox
+from PIL import Image, ImageTk
 
 # making the main window
 root = tk.Tk()
 root.title("Main")
-root.config(bg="#232323")
+root.config(bg = "#2971bb")
 root.geometry("800x600")
 
 # difficulty for paint drying sim
@@ -39,6 +40,15 @@ placeholder_button = None
 global clicks, countdown
 clicks = 0
 countdown = 100
+
+# where to get images
+game_folder = path.dirname(__file__)
+img_folder = path.join(game_folder, 'images')
+
+# defining and scaling the bg image
+bg_img = Image.open(path.join(img_folder, "main menu bg.png"))
+bg_img = bg_img.resize((800,600), Image.LANCZOS)
+bg_img = ImageTk.PhotoImage(bg_img)
 
 def difficulties():
     return difficulties_list
@@ -56,8 +66,14 @@ def load_main_menu(): # loads the games menu
     pg.mixer.music.play(-1)
     clear_all_widgets()
     root.title("Game Selector")
-    global pds_button, placeholder_button
-    pds_button = tk.Button(root, # where it is placed
+
+    bg_label = tk.Label(root, image = bg_img)
+    bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
+
+    button_grid = tk.Frame(root, bg = "#2971bb")
+    button_grid.pack(expand = True, anchor = "s")
+
+    pds_button = tk.Button(button_grid, # where it is placed
                    text="Paint Drying Sim", # what the button says
                    command = options_screen, # what it does when clicked (options screen, then runs paint_drying_sim.py with that difficulty)
                    activebackground="#669361", # when clicked bg
@@ -78,20 +94,9 @@ def load_main_menu(): # loads the games menu
                    width=15, # width of the button
                    wraplength=100) # max length of text (in pixels) befor it is wrapped to the next line
 
-    pds_button.pack(padx = 10, pady = 10) # .pack makes the button appear on the window (.grid can also be used)
+    pds_button.grid(row = 0, column = 0, padx = 10, pady = 0) # .pack makes the button appear on the window (.grid can also be used)
 
-    placeholder_button = tk.Button(root,
-                                text = "Mysterious Button",
-                                command = placeholder_cmd, # secret dialog
-                                bd = 3,
-                                cursor = "question_arrow",
-                                font = ("Arial", 12),
-                                height = 2,
-                                justify = "center",
-                                width = 15,
-                                wraplength = 100)
-
-    paint_clicker_button = tk.Button(root,
+    paint_clicker_button = tk.Button(button_grid,
                                      text = "Paint Drying Clicker",
                                      command = run_pdc, # paint_drying_clicker.py
                                      bd = 3,
@@ -105,11 +110,22 @@ def load_main_menu(): # loads the games menu
                                      fg = "#FFFFFF",
                                      activebackground = "#9D8665")
 
-    paint_clicker_button.pack(padx = 10, pady = 10) # padx and pady are the padding horizontally and vertcally around a widget
+    paint_clicker_button.grid(row = 0, column = 1, padx = 10, pady = 0) # padx and pady are the padding horizontally and vertcally around a widget
 
-    placeholder_button.pack(padx = 10, pady = 10)
+    placeholder_button = tk.Button(button_grid,
+                                text = "Mysterious Button",
+                                command = placeholder_cmd, # secret dialog
+                                bd = 3,
+                                cursor = "question_arrow",
+                                font = ("Arial", 12),
+                                height = 2,
+                                justify = "center",
+                                width = 15,
+                                wraplength = 100)
 
-    quit_button = tk.Button(root,
+    placeholder_button.grid(row = 1, column = 0, padx = 10, pady = 80)
+
+    quit_button = tk.Button(button_grid,
                             text = "Quit",
                             command = root.destroy,
                             bg="#b43c3c",
@@ -123,7 +139,7 @@ def load_main_menu(): # loads the games menu
                             width = 15,
                             wraplength = 100)
     
-    quit_button.pack(padx = 10, pady = 10)
+    quit_button.grid(row = 1, column = 1, padx = 10, pady = 80)
 
 def get_selected_difficulty():
     global global_selected_difficulty
