@@ -22,7 +22,7 @@ import paint_drying_sim as pdsim
 
 import tkinter as tk
 from tkinter import messagebox
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk # pillow is needed to get the bg image
 
 # making the main window
 root = tk.Tk()
@@ -72,7 +72,7 @@ def load_main_menu(): # loads the games menu
     bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
     button_grid = tk.Frame(root, bg = "#2971bb")
-    button_grid.pack(expand = True, anchor = "s")
+    button_grid.pack(expand = True, anchor = "s", pady = 20)
 
     pds_button = tk.Button(button_grid, # where it is placed
                    text="Paint Drying Sim", # what the button says

@@ -174,7 +174,7 @@ class Mob(Sprite):
         
         # Animation setup
         self.last_update = 0
-        self.frame_rate = 100  # Time between frame updates in milliseconds
+        self.frame_rate = 40  # Time between frame updates in milliseconds
         
         if mob_type == 1:
             self.static_image = game.pig_img
