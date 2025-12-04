@@ -29,6 +29,7 @@ root = tk.Tk()
 root.title("Main")
 root.config(bg = "#2971bb")
 root.geometry("800x600")
+root.resizable(width=False, height=False)
 
 # difficulty for paint drying sim
 difficulty_var = tk.StringVar(root)
