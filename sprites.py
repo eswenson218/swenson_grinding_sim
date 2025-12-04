@@ -35,7 +35,6 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
         self.image = self.game.player_img
         self.load_images()
         self.image = pg.Surface((64, 64))
-        #self.image.fill(GREEN)
         self.rect = self.image.get_rect()
         # player uses position and velocity vectors for smooth movement
         self.pos = vec(x, y) * TILESIZE[0]
@@ -43,7 +42,6 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
         self.speed = PLAYER_SPEED
         self.health = HEALTH
         self.coins = 0
-        self.cd = Cooldown(1000)
         self.direction = 'up'
         self.walking = False
         self.jumping = False
@@ -386,29 +384,6 @@ class Wall(Sprite):
         self.collide_with_walls('x')
         self.rect.y = self.pos.y
         self.collide_with_walls('y')
-
-class Projectile(Sprite):
-    def __init__(self, game, x, y, dir):
-        self.game = game
-        self.groups = game.all_sprites, game.all_projectiles
-        Sprite.__init__(self, self.groups)
-        self.game = game
-        self.image = pg.Surface((16, 16))
-        self.image.fill(RED)
-        self.rect = self.image.get_rect()
-        self.vel = dir
-        self.pos = vec(x,y)
-        self.rect.x = x
-        self.rect.y = y
-        self.speed = 10
-
-    def update(self):
-        self.pos += self.vel * self.speed
-        self.rect.x = self.pos.x
-        self.rect.y = self.pos.y
-        hits = pg.sprite.spritecollide(self, self.game.all_walls, True)
-        if hits:
-            self.kill()
 
 class Target_Object(Sprite):
     def __init__(self, game, x, y):

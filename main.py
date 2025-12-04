@@ -28,7 +28,7 @@ from PIL import Image, ImageTk # pillow is needed to get the bg image
 root = tk.Tk()
 root.title("Main")
 root.config(bg = "#2971bb")
-root.geometry("800x600")
+root.geometry("800x600+300+150") # width x height + x-location top left corner of window + y-loacation
 root.resizable(width=False, height=False)
 
 # difficulty for paint drying sim

@@ -40,34 +40,34 @@ class Game:
             self.max_mobs = 15
             self.spawn_delay = 420
 
-            self.coin_spawn_delay = 3500
+            self.coin_spawn_delay = 3000
             self.coin_spawn_chance = 0.5
             self.max_coins = 2
         
         elif selected_difficulty == "Apocalypse":
             self.game_duration = 100
 
-            self.max_mobs = 20
-            self.spawn_delay = 250
+            self.max_mobs = 18
+            self.spawn_delay = 300
 
-            self.coin_spawn_delay = 4000
+            self.coin_spawn_delay = 3200
             self.coin_spawn_chance = 0.17
-            self.max_coins = 1
+            self.max_coins = 2
         
         elif selected_difficulty == "Apocalypse +":
             self.game_duration = 120
 
             self.max_mobs = 20
-            self.spawn_delay = 150
+            self.spawn_delay = 250
 
             self.coin_spawn_delay = 3500
             self.coin_spawn_chance = 0.5
-            self.max_coins = 2
+            self.max_coins = 1
         
         elif selected_difficulty == "Speed Challenge":
-            self.game_duration = 20
+            self.game_duration = 25
 
-            self.max_mobs = 12
+            self.max_mobs = 20
             self.spawn_delay = 250
 
             self.coin_spawn_delay = 1600
@@ -201,10 +201,6 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == '1':
                     Wall(self, col, row, "unmoveable")
-                elif tile == '2':
-                    Wall(self, col, row, "moveable")
-                elif tile == '3':
-                    Wall(self, col, row, "breakable")
                 elif tile == 'C':
                     Coin(self, col, row)
                 elif tile == 'P':
