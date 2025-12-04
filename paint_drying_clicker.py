@@ -27,7 +27,7 @@ class Game:
 
         # these will not be reset
         self.ascension_count = 0
-        self.ascension_cost = 10000
+        self.ascension_cost = 10000 # base cost; will multiply by 10 for each tier
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
             # key is upgrade name, value is the dictionary inside the dictionary
@@ -231,7 +231,7 @@ class Game:
         self.lava_noise.set_volume(0.4)
 
         self.ascend_noise = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
-        self.ascend_noise.set_volume(0.3)
+        self.ascend_noise.set_volume(0.2)
 
         self.song = pg.mixer.Sound(path.join(self.sound_folder, 'Lava Chicken - Hyper Potions.mp3'))
         self.song.set_volume(0.7)
@@ -418,6 +418,11 @@ class Game:
             upgrade["cost"] = upgrade["base cost"]
             if "count" in upgrade:
                 upgrade["count"] = 0
+        self.bulb_buzz.stop()
+        self.fan_noise.stop()
+        self.heater_noise.stop()
+        self.campfire_noise.stop()
+        self.lava_noise.stop()
     
     def buy_ascension(self):
         if self.dryness >= self.ascension_cost:
