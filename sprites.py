@@ -37,6 +37,7 @@ class Player(Sprite): # Sprite is a superclasss inherited by the Player class
         self.image = pg.Surface((64, 64))
         self.rect = self.image.get_rect()
         # player uses position and velocity vectors for smooth movement
+        self.cd = Cooldown(1000)
         self.pos = vec(x, y) * TILESIZE[0]
         self.vel = vec(0, 0)
         self.speed = PLAYER_SPEED

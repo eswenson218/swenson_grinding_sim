@@ -8,6 +8,7 @@ https://www.geeksforgeeks.org/python/python-gui-tkinter/#
 https://www.geeksforgeeks.org/python/python-creating-a-button-in-tkinter/
 https://www.geeksforgeeks.org/python/python-tkinter-messagebox-widget/
 importing files to not overwrite the classes - Minglang (here's his github: https://github.com/minglangdu)
+opening the tkinter window in a certain place: https://www.youtube.com/watch?v=9b1x6dZakuk
 '''
 
 # import necessary modules
@@ -72,7 +73,7 @@ def load_main_menu(): # loads the games menu
     bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
     button_grid = tk.Frame(root, bg = "#2971bb")
-    button_grid.pack(expand = True, anchor = "s", pady = 20)
+    button_grid.pack(expand = True, anchor = "s", pady = 70)
 
     pds_button = tk.Button(button_grid, # where it is placed
                    text="Paint Drying Sim", # what the button says
@@ -124,7 +125,7 @@ def load_main_menu(): # loads the games menu
                                 width = 15,
                                 wraplength = 100)
 
-    placeholder_button.grid(row = 1, column = 0, padx = 10, pady = 80)
+    placeholder_button.grid(row = 1, column = 0, padx = 10, pady = 50)
 
     quit_button = tk.Button(button_grid,
                             text = "Quit",
@@ -140,7 +141,7 @@ def load_main_menu(): # loads the games menu
                             width = 15,
                             wraplength = 100)
     
-    quit_button.grid(row = 1, column = 1, padx = 10, pady = 80)
+    quit_button.grid(row = 1, column = 1, padx = 10, pady = 50)
 
 def get_selected_difficulty():
     global global_selected_difficulty
@@ -153,8 +154,9 @@ def run_pds():
         g = pdsim.Game(global_selected_difficulty) # pdsim.Game uses the game class from paint_drying_sim.py
         g.new(global_selected_difficulty)
         g.run()
-    except: # if an error occurs, informs user instead of breaking
-        messagebox.showerror("Error", "Whoops. This didn't work.")
+    except Exception as e: # if an error occurs, informs user instead of breaking
+        messagebox.showerror("Error", f"Error: {e}")
+        print(f"{e}")
     root.deiconify() # brings root window back into view
     load_main_menu()
 
@@ -165,8 +167,9 @@ def run_pdc():
         g = pdclicker.Game() # pdclicker.Game uses the game class from paint_drying_clicker.py
         g.new()
         g.run()
-    except: # if an error occurs, informs user instead of breaking
-        messagebox.showerror("Error", "Whoops. This didn't work.")
+    except Exception as e: # if an error occurs, informs user instead of breaking
+        messagebox.showerror("Error", f"Error: {e}")
+        print(f"{e}")
     root.deiconify() # brings root window back into view
     load_main_menu()
 
