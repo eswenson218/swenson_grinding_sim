@@ -293,7 +293,7 @@ def run_pdc():
     load_main_menu()
 
 def run_fp():
-    pass
+    messagebox.showinfo("Free Paint", "This hasn't been added yet.")
 
 def apply_vol(vol):
     vol = int(vol)

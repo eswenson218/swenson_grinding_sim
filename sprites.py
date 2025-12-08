@@ -24,7 +24,6 @@ pg.mixer.init()
 game_folder = path.dirname(__file__)
 sound_folder = path.join(game_folder, 'sounds')
 painting_dmg = pg.mixer.Sound(path.join(sound_folder, 'wood break.mp3'))
-painting_dmg.set_volume(settings.VOL_MULT * 0.1)
 
 # makes Player a sprite
 class Player(Sprite): # Sprite is a superclasss inherited by the Player class
@@ -421,6 +420,7 @@ class Target_Object(Sprite):
     def update(self):
         hits = pg.sprite.spritecollide(self, self.game.all_mobs, True)
         if hits:
+            painting_dmg.set_volume(settings.VOL_MULT * 0.1)
             painting_dmg.play()
             mob = hits[0]
             self.health -= mob.damage
