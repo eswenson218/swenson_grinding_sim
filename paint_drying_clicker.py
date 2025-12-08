@@ -3,7 +3,8 @@
 # import necessary modules
 import random
 import pygame as pg
-from settings import *  # the starting values of variables and constants
+from settings import *
+import settings # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
 from os import path
@@ -203,41 +204,41 @@ class Game:
 
         # bg music
         self.bg_music = pg.mixer.music.load(path.join(self.sound_folder, 'Transcendence.mp3'))
-        self.bg_music = pg.mixer.music.set_volume(0.08)
+        self.bg_music = pg.mixer.music.set_volume(settings.VOL_MULT * 0.08)
         
         # sfx
         self.click_sound = pg.mixer.Sound(path.join(self.sound_folder, 'mouse click.mp3'))
-        self.click_sound.set_volume(0.02)
+        self.click_sound.set_volume(settings.VOL_MULT * 0.02)
 
         self.blanket_noise = pg.mixer.Sound(path.join(self.sound_folder, 'poof.mp3'))
-        self.blanket_noise.set_volume(0.07)
+        self.blanket_noise.set_volume(settings.VOL_MULT * 0.07)
 
         self.bulb_buzz = pg.mixer.Sound(path.join(self.sound_folder, 'light bulb buzz.mp3'))
-        self.bulb_buzz.set_volume(0.5)
+        self.bulb_buzz.set_volume(settings.VOL_MULT * 0.5)
 
         self.lamp_on = pg.mixer.Sound(path.join(self.sound_folder, 'lamp switch.mp3'))
-        self.lamp_on.set_volume(0.95)
+        self.lamp_on.set_volume(settings.VOL_MULT * 0.95)
 
         self.fan_noise = pg.mixer.Sound(path.join(self.sound_folder, 'fan noise.mp3'))
-        self.fan_noise.set_volume(0.2)
+        self.fan_noise.set_volume(settings.VOL_MULT * 0.2)
 
         self.heater_noise = pg.mixer.Sound(path.join(self.sound_folder, 'fire crackles.mp3'))
-        self.heater_noise.set_volume(0.2)
+        self.heater_noise.set_volume(settings.VOL_MULT * 0.2)
 
         self.campfire_noise = pg.mixer.Sound(path.join(self.sound_folder, 'campfire.mp3'))
-        self.campfire_noise.set_volume(0.3)
+        self.campfire_noise.set_volume(settings.VOL_MULT * 0.3)
 
         self.lava_noise = pg.mixer.Sound(path.join(self.sound_folder, 'lava.mp3'))
-        self.lava_noise.set_volume(0.4)
+        self.lava_noise.set_volume(settings.VOL_MULT * 0.4)
 
         self.ascend_noise = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
-        self.ascend_noise.set_volume(0.2)
+        self.ascend_noise.set_volume(settings.VOL_MULT * 0.2)
 
         self.song = pg.mixer.Sound(path.join(self.sound_folder, 'Lava Chicken - Hyper Potions.mp3'))
-        self.song.set_volume(0.7)
+        self.song.set_volume(settings.VOL_MULT * 0.7)
 
         self.rickroll = pg.mixer.Sound(path.join(self.sound_folder, 'rickroll.wav'))
-        self.rickroll.set_volume(0.9)
+        self.rickroll.set_volume(settings.VOL_MULT * 0.9)
 
         # sprites
         self.clicker_painting_img = pg.image.load(path.join(self.img_folder, 'mona_lisa.png')).convert_alpha()

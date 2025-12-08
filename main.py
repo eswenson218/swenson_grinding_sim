@@ -9,13 +9,15 @@ https://www.geeksforgeeks.org/python/python-creating-a-button-in-tkinter/
 https://www.geeksforgeeks.org/python/python-tkinter-messagebox-widget/
 importing files to not overwrite the classes - Minglang (here's his github: https://github.com/minglangdu)
 opening the tkinter window in a certain place: https://www.youtube.com/watch?v=9b1x6dZakuk
+I learned how to add the bg img in tkinter from searching "How to add a background image in tkinter" in Google
+Tkinter slider - searched: "how to add a slider in tkinter" in Google
 '''
 
 # import necessary modules
 import pygame as pg
-from settings import *  # the starting values of variables and constants
-from sprites import *  # defining the characters / objects (player, mob, etc.)
-from utils import *  # defining the characteristics of the maps
+from settings import *
+import settings  # the starting values of variables and constants
+from os import path
 
 # need to import these files with a different name so that their game classes don't overwrite each other
 import paint_drying_clicker as pdclicker
@@ -23,13 +25,13 @@ import paint_drying_sim as pdsim
 
 import tkinter as tk
 from tkinter import messagebox
-from PIL import Image, ImageTk # pillow is needed to get the bg image
+from PIL import Image, ImageTk # pillow is needed to get the bg image in tkinter
 
 # making the main window
 root = tk.Tk()
 root.title("Main")
 root.config(bg = "#2971bb")
-root.geometry("800x600+300+150") # width x height + x-location top left corner of window + y-loacation
+root.geometry("800x600+300+150") # width x height + x-location (top left corner of window) + y-loacation (top)
 root.resizable(width=False, height=False)
 
 # difficulty for paint drying sim
@@ -64,7 +66,7 @@ def load_main_menu(): # loads the games menu
     game_folder = path.dirname(__file__)
     sound_folder = path.join(game_folder, 'sounds')
     pg.mixer.music.load(path.join(sound_folder, 'main menu bg music.mp3'))
-    pg.mixer.music.set_volume(0.7)
+    pg.mixer.music.set_volume(settings.VOL_MULT * 0.7)
     pg.mixer.music.play(-1)
     clear_all_widgets()
     root.title("Game Selector")
@@ -96,7 +98,7 @@ def load_main_menu(): # loads the games menu
                    width=15, # width of the button
                    wraplength=100) # max length of text (in pixels) befor it is wrapped to the next line
 
-    pds_button.grid(row = 0, column = 0, padx = 10, pady = 0) # .pack makes the button appear on the window (.grid can also be used)
+    pds_button.grid(row = 0, column = 0, padx = 10, pady = 10) # .pack makes the button appear on the window (.grid can also be used)
 
     paint_clicker_button = tk.Button(button_grid,
                                      text = "Paint Drying Clicker",
@@ -112,7 +114,23 @@ def load_main_menu(): # loads the games menu
                                      fg = "#FFFFFF",
                                      activebackground = "#9D8665")
 
-    paint_clicker_button.grid(row = 0, column = 1, padx = 10, pady = 0) # padx and pady are the padding horizontally and vertcally around a widget
+    paint_clicker_button.grid(row = 0, column = 1, padx = 10, pady = 10) # padx and pady are the padding horizontally and vertcally around a widget
+
+    free_paint_button = tk.Button(button_grid,
+                                  text = "Free Paint",
+                                  command = run_fp,
+                                  bd = 3,
+                                  cursor = "spraycan",
+                                  font = ("Arial", 12),
+                                  height = 2,
+                                  justify = "center",
+                                  width = 15,
+                                  wraplength = 100,
+                                  bg = "#F9B6FF",
+                                  fg = "#000000",
+                                  activebackground = "#F5D4F8")
+    
+    free_paint_button.grid(row = 1, column = 0, padx = 10, pady = 20)
 
     placeholder_button = tk.Button(button_grid,
                                 text = "Mysterious Button",
@@ -125,7 +143,21 @@ def load_main_menu(): # loads the games menu
                                 width = 15,
                                 wraplength = 100)
 
-    placeholder_button.grid(row = 1, column = 0, padx = 10, pady = 50)
+    placeholder_button.grid(row = 1, column = 1, padx = 10, pady = 20)
+
+    settings_button = tk.Button(button_grid,
+                                text = "Settings",
+                                command = settings_screen,
+                                bg = "#B8B6B6",
+                                activebackground = "#9F9E9E",
+                                bd = 3,
+                                cursor = "hand2",
+                                font = ("Arial", 12),
+                                height = 2,
+                                justify = "center",
+                                width = 15,
+                                wraplength = 100)
+    settings_button.grid(row = 2, column = 0, padx = 10, pady = 10)
 
     quit_button = tk.Button(button_grid,
                             text = "Quit",
@@ -141,13 +173,14 @@ def load_main_menu(): # loads the games menu
                             width = 15,
                             wraplength = 100)
     
-    quit_button.grid(row = 1, column = 1, padx = 10, pady = 50)
+    quit_button.grid(row = 2, column = 1, padx = 10, pady = 10)
 
 def get_selected_difficulty():
     global global_selected_difficulty
     global_selected_difficulty = difficulty_var.get()
 
 def run_pds():
+    get_selected_difficulty()
     pg.mixer.music.pause()
     root.withdraw() # hides root window
     try: # tries to run the game
@@ -156,7 +189,6 @@ def run_pds():
         g.run()
     except Exception as e: # if an error occurs, informs user instead of breaking
         messagebox.showerror("Error", f"Error: {e}")
-        print(f"{e}")
     root.deiconify() # brings root window back into view
     load_main_menu()
 
@@ -169,13 +201,24 @@ def run_pdc():
         g.run()
     except Exception as e: # if an error occurs, informs user instead of breaking
         messagebox.showerror("Error", f"Error: {e}")
-        print(f"{e}")
     root.deiconify() # brings root window back into view
     load_main_menu()
 
-def launch_game(): # runs game with the selected difficulty
-    get_selected_difficulty()
-    run_pds()
+def run_fp():
+    pass
+
+def apply_vol(vol):
+    vol = int(vol)
+    settings.VOL_MULT = vol / 100
+    return settings.VOL_MULT
+
+def apply_mob_speed(speed):
+    settings.MOB_SPEED = int(speed)
+    return settings.MOB_SPEED
+
+def apply_changes():
+    load_main_menu()
+    settings_screen()
 
 def options_screen(): # creates the options screen for paint drying sim
     clear_all_widgets()
@@ -196,11 +239,45 @@ def options_screen(): # creates the options screen for paint drying sim
     button_frame = tk.Frame(root, bg = "#1C1B52")
     button_frame.pack()
 
-    continue_button = tk.Button(button_frame, text = "Continue", command = launch_game, font = ("Arial", 12), width = 20, cursor = "sb_right_arrow", bg = "#2E863A", fg = "#FFFFFF", activebackground = "#4F9758")
+    continue_button = tk.Button(button_frame, text = "Continue", command = run_pds, font = ("Arial", 12), width = 20, cursor = "sb_right_arrow", bg = "#2E863A", fg = "#FFFFFF", activebackground = "#4F9758")
     continue_button.pack(side = "right", padx = 20, pady = 20)
 
     back_button = tk.Button(button_frame, text = "Back", command = load_main_menu, font = ("Arial", 12), width = 20, cursor = "sb_left_arrow", bg = "#DC5151", fg = "#FFFFFF", activebackground = "#E27E7E")
     back_button.pack(side = "left", padx = 20, pady = 20)
+
+def settings_screen():
+    clear_all_widgets()
+
+    root.title("Paint Drying Games Settings")
+
+    screen_label = tk.Label(root, text = "Settings", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4)
+    screen_label.pack(padx = 20)
+
+    settings_frame = tk.Frame(root, bg = "#2A2885", width = 1000)
+    settings_frame.pack(fill = "x", padx = 25)
+
+    vol_slider_label = tk.Label(settings_frame, text = "Volume", font = ("Arial", 12), fg = "#FFFFFF", bg = "#2A2885", width = 5, height = 1)
+    vol_slider_label.grid(row = 0, column = 0, padx = 70, pady = 20)
+
+    vol_slider = tk.Scale(settings_frame, from_ = 0, to = 100, orient = tk.HORIZONTAL, command = apply_vol, length = 150, cursor = "hand2")
+    vol_slider.grid(row = 0, column = 1, padx = 0, pady = 20)
+    vol_slider.set(settings.VOL_MULT * 100)
+
+    mob_speed_label = tk.Label(settings_frame, bg = "#2A2885", text = " Mob Speed", font = ("Arial", 12), fg = "#FFFFFF", width = 10, height = 1)
+    mob_speed_label.grid(row = 0, column = 2, padx = 40, pady = 20)
+
+    mob_speed_slider = tk.Scale(settings_frame, from_ = 1, to = 10, orient = tk.HORIZONTAL, command = apply_mob_speed, length = 150, cursor = "hand2")
+    mob_speed_slider.grid(row = 0, column = 3, padx = 0, pady = 20)
+    mob_speed_slider.set(settings.MOB_SPEED)
+
+    button_frame = tk.Frame(root, bg = "#1C1B52")
+    button_frame.pack()
+
+    back_button = tk.Button(button_frame, text = "Back", command = load_main_menu, font = ("Arial", 12), width = 20, cursor = "sb_left_arrow", bg = "#DC5151", fg = "#FFFFFF", activebackground = "#E27E7E")
+    back_button.pack(side = "left", padx = 20, pady = 20)
+
+    apply_button = tk.Button(button_frame, text = "Apply", command = apply_changes, font = ("Arial", 12), width = 20, cursor = "star", bg = "#2E863A", fg = "#FFFFFF", activebackground = "#4F9758")
+    apply_button.pack(side = "right", padx = 20, pady = 20)
 
 def placeholder_cmd(): # secret dialog
     global clicks

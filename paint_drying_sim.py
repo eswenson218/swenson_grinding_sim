@@ -3,7 +3,8 @@
 # import necessary modules
 import random
 import pygame as pg
-from settings import *  # the starting values of variables and constants
+from settings import *
+import settings  # the starting values of variables and constants
 from sprites import *  # defining the characters / objects (player, mob, etc.)
 from utils import *  # defining the characteristics of the maps
 from os import path
@@ -107,16 +108,16 @@ class Game:
 
         # sfx
         self.win = pg.mixer.Sound(path.join(self.sound_folder, 'win.mp3'))
-        self.win.set_volume(0.4)
+        self.win.set_volume(settings.VOL_MULT * 0.4)
 
         self.lose = pg.mixer.Sound(path.join(self.sound_folder, 'lose.mp3'))
-        self.lose.set_volume(0.2)
+        self.lose.set_volume(settings.VOL_MULT * 0.2)
 
         self.poof = pg.mixer.Sound(path.join(self.sound_folder, 'poof.mp3'))
-        self.poof.set_volume(0.5)
+        self.poof.set_volume(settings.VOL_MULT * 0.5)
 
         self.powerup = pg.mixer.Sound(path.join(self.sound_folder, 'powerup collect.mp3'))
-        self.powerup.set_volume(0.1)
+        self.powerup.set_volume(settings.VOL_MULT * 0.1)
 
         # layout (from paint_drying_arena.txt)
         self.map = Map(path.join(self.game_folder, 'paint_drying_arena.txt'))
@@ -172,7 +173,7 @@ class Game:
             pg.mixer.music.load(path.join(self.sound_folder, "song 3.wav"))
         else: # if normal difficulty
             pg.mixer.music.load(path.join(self.sound_folder, "song 2.wav"))
-        pg.mixer.music.set_volume(0.4)
+        pg.mixer.music.set_volume(settings.VOL_MULT * 0.4)
         pg.mixer.music.play(-1)
 
         # creating sprite groups

@@ -12,6 +12,7 @@ scaling and rotating images in pygame - https://www.youtube.com/watch?v=Xzmpl5tn
 import pygame as pg
 from pygame.sprite import Sprite
 from settings import *
+import settings
 from utils import *  # contains Cooldown and other useful tools
 import random
 import math
@@ -23,7 +24,7 @@ pg.mixer.init()
 game_folder = path.dirname(__file__)
 sound_folder = path.join(game_folder, 'sounds')
 painting_dmg = pg.mixer.Sound(path.join(sound_folder, 'wood break.mp3'))
-painting_dmg.set_volume(0.1)
+painting_dmg.set_volume(settings.VOL_MULT * 0.1)
 
 # makes Player a sprite
 class Player(Sprite): # Sprite is a superclasss inherited by the Player class
@@ -217,7 +218,7 @@ class Mob(Sprite):
         self.image = self.animation_frames[0]
         self.original_image = self.image
         self.rect = self.image.get_rect()
-        self.speed = MOB_SPEED
+        self.speed = settings.MOB_SPEED
         self.speedchangex = False
         self.speedchangey = False
         self.startspeed = 1

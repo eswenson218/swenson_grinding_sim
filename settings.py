@@ -28,7 +28,11 @@ CLICKER_H = TILESIZE[1] * 24
 HEALTH = 5
 PLAYER_SPEED = 8
 
+# (10 is max, 1 is min)
 MOB_SPEED = 5
+
+# (1 is max, 0 is min)
+VOL_MULT = 1.0
 
 # colors
 WHITE = (255, 255, 255)
