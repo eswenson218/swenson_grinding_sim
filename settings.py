@@ -7,12 +7,6 @@ selected_difficulty = "Normal" # preset difficulty
 
 FPS = 30
 
-x = 100
-y = 100
-
-mobx = 250
-mob = 250
-
 # arena settings
 TILES_W = 32
 TILES_H = 24

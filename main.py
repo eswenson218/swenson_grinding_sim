@@ -74,6 +74,21 @@ def load_main_menu(): # loads the games menu
     bg_label = tk.Label(root, image = bg_img)
     bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
+    tutorials_button = tk.Button(root,
+                                text = "Tutorials",
+                                command = tutorial_screen,
+                                activebackground = "#908DFF",
+                                anchor = "center",
+                                bd = 3,
+                                bg = "#6E69F8",
+                                cursor = "question_arrow",
+                                fg = "#FFFFFF",
+                                font = ("Arial", 12),
+                                height = 1,
+                                width = 8)
+    
+    tutorials_button.pack(padx = 20, pady = 20, anchor = "ne")
+
     button_grid = tk.Frame(root, bg = "#2971bb")
     button_grid.pack(expand = True, anchor = "s", pady = 70)
 
@@ -104,7 +119,7 @@ def load_main_menu(): # loads the games menu
                                      text = "Paint Drying Clicker",
                                      command = run_pdc, # paint_drying_clicker.py
                                      bd = 3,
-                                     cursor = "spraycan",
+                                     cursor = "hand1",
                                      font = ("Arial", 12),
                                      height = 2,
                                      justify = "center",
@@ -174,6 +189,79 @@ def load_main_menu(): # loads the games menu
                             wraplength = 100)
     
     quit_button.grid(row = 2, column = 1, padx = 10, pady = 10)
+
+def pds_tutorial():
+    messagebox.showinfo("Paint Drying Sim Tutorial", "Click the mobs. Touchscreen works (and is reccommended).\nProtect the painting from the animals for long enough to win!")
+
+def pdc_tutorial():
+    messagebox.showinfo("Paint Drying Clicker Tutorial", "Click the painting to get dryness.\nSpend dryness on upgrades to increase dryness per click (DPC) or dryness per second (DPS).\nUpgrade Upgrades are permanent upgrades that do special things.\nAscend to unlock permanent upgrades (be careful! ascending wipes your progress on everything else).")
+
+def fp_tutorial():
+    messagebox.showinfo("Free Paint Tutorial", "This will be a bare bones paint thing.")
+
+def tutorial_screen():
+    clear_all_widgets()
+
+    root.title("Tutorials")
+
+    tutorial_label = tk.Label(root, text = "Tutorials", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4, cursor = "question_arrow")
+    tutorial_label.pack(padx = 20)
+
+    button_frame = tk.Frame(root, bg = "#1C1B52")
+    button_frame.pack()
+
+    pds_button = tk.Button(button_frame,
+                   text="Paint Drying Sim",
+                   command = pds_tutorial,
+                   activebackground="#669361",
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="#3b6e36",
+                   cursor="gobbler",
+                   fg="black",
+                   font=("Arial", 12),
+                   height=2,
+                   justify="center",
+                   width=15,
+                   wraplength=100)
+
+    pds_button.pack(padx = 10, pady = 10, anchor = "center")
+
+    paint_clicker_button = tk.Button(button_frame,
+                                     text = "Paint Drying Clicker",
+                                     command = pdc_tutorial,
+                                     bd = 3,
+                                     cursor = "hand1",
+                                     font = ("Arial", 12),
+                                     height = 2,
+                                     justify = "center",
+                                     width = 15,
+                                     wraplength = 100,
+                                     bg = "#80633A",
+                                     fg = "#FFFFFF",
+                                     activebackground = "#9D8665")
+
+    paint_clicker_button.pack(padx = 10, pady = 10, anchor = "center")
+
+    free_paint_button = tk.Button(button_frame,
+                                  text = "Paint Drying Clicker",
+                                     command = fp_tutorial,
+                                     bd = 3,
+                                     cursor = "spraycan",
+                                     font = ("Arial", 12),
+                                     height = 2,
+                                     justify = "center",
+                                     width = 15,
+                                     wraplength = 100,
+                                     bg = "#F9B6FF",
+                                     fg = "#000000",
+                                     activebackground = "#F5D4F8")
+    
+    free_paint_button.pack(padx = 10, pady = 10, anchor = "center")
+
+    back_button = tk.Button(button_frame, text = "Back", command = load_main_menu, font = ("Arial", 12), width = 20, cursor = "sb_left_arrow", bg = "#DC5151", fg = "#FFFFFF", activebackground = "#E27E7E")
+    back_button.pack(side = "left", padx = 20, pady = 20)
 
 def get_selected_difficulty():
     global global_selected_difficulty
@@ -250,7 +338,7 @@ def settings_screen():
 
     root.title("Paint Drying Games Settings")
 
-    screen_label = tk.Label(root, text = "Settings", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4)
+    screen_label = tk.Label(root, text = "Settings", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4, cursor = "pencil")
     screen_label.pack(padx = 20)
 
     settings_frame = tk.Frame(root, bg = "#2A2885", width = 1000)
