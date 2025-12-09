@@ -297,14 +297,20 @@ def run_fp():
 
 def apply_vol(vol):
     vol = int(vol)
-    settings.VOL_MULT = vol / 100
-    return settings.VOL_MULT
+    settings.temp_vol_mult = vol / 100
+    return settings.temp_vol_mult
 
 def apply_mob_speed(speed):
-    settings.MOB_SPEED = int(speed)
-    return settings.MOB_SPEED
+    settings.temp_mob_speed = int(speed)
+    return settings.temp_mob_speed
 
 def apply_changes():
+    settings.VOL_MULT = settings.temp_vol_mult
+    settings.MOB_SPEED = settings.temp_mob_speed
+    return settings.VOL_MULT, settings.MOB_SPEED
+
+def apply_and_refresh():
+    apply_changes()
     load_main_menu()
     settings_screen()
 
@@ -364,7 +370,7 @@ def settings_screen():
     back_button = tk.Button(button_frame, text = "Back", command = load_main_menu, font = ("Arial", 12), width = 20, cursor = "sb_left_arrow", bg = "#DC5151", fg = "#FFFFFF", activebackground = "#E27E7E")
     back_button.pack(side = "left", padx = 20, pady = 20)
 
-    apply_button = tk.Button(button_frame, text = "Apply", command = apply_changes, font = ("Arial", 12), width = 20, cursor = "star", bg = "#2E863A", fg = "#FFFFFF", activebackground = "#4F9758")
+    apply_button = tk.Button(button_frame, text = "Apply", command = apply_and_refresh, font = ("Arial", 12), width = 20, cursor = "star", bg = "#2E863A", fg = "#FFFFFF", activebackground = "#4F9758")
     apply_button.pack(side = "right", padx = 20, pady = 20)
 
 def placeholder_cmd(): # secret dialog

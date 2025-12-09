@@ -28,6 +28,9 @@ MOB_SPEED = 5
 # (1 is max, 0 is min)
 VOL_MULT = 1.0
 
+temp_vol_mult = 1.0
+temp_mob_speed = 5
+
 # colors
 WHITE = (255, 255, 255)
 GREY = (160, 160, 160)
