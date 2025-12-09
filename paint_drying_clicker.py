@@ -28,7 +28,7 @@ class Game:
 
         # these will not be reset
         self.ascension_count = 0
-        self.ascension_cost = 10000 # base cost; will multiply by 10 for each tier
+        self.ascension_cost = 1000 # base cost; will multiply by 10 for each tier
 
         self.permanent_upgrades = { # 2D dictionary using key value pairs to store data about permanent upgrades
             # key is upgrade name, value is the dictionary inside the dictionary
@@ -66,12 +66,20 @@ class Game:
                 "cost": 10000000,
                 "purchased": False
             },
-            "Warmer Lamps": { # dps multiplied by half on total light bulbs
+            "Warmer Lamps": { # dps multiplied by half of total no. of light bulbs
                 "cost": 10000000,
                 "purchased": False
             },
             "Better Dryers": { # dps increased by 1% of itself
                 "cost": 20000000,
+                "purchased": False
+            },
+            "More Clicks": { # dpc increases every click
+                "cost": 10000000,
+                "purchased": False
+            },
+            "Warm that Lava": { # lava bucket dps increased by 1% for 1/5th of the amount of blankets
+                "cost": 25000000,
                 "purchased": False
             }
         }
@@ -328,9 +336,13 @@ class Game:
     
     def click_painting(self): # logic for giving dryness when the painting is clicked
         dps_bonus = 0
+        dpc_multiplier = 1.0
         if self.permanent_upgrades["Thermotropism"]["purchased"]: # 1% of dps added to each click
             dps_bonus = self.dryness_per_second * 0.01
+        if self.permanent_upgrades["More Clicks"]["purchased"]:
+            dpc_multiplier = 1.01
 
+        self.dryness_per_click *= dpc_multiplier
         self.dryness += self.dryness_per_click + dps_bonus
 
         # expanding the painting when clicked
@@ -453,6 +465,7 @@ class Game:
         heater_fan_bonus_multiplier = 1.0 
         campfire_multiplier = 1.0
         heat_lamp_multiplier = 1.0
+        lb_multiplier = 1.0
 
         if self.permanent_upgrades["Superfans"]["purchased"]: # fan dps increased to 10
             fan_multiplier = 2.0
@@ -471,6 +484,10 @@ class Game:
         
         if self.permanent_upgrades["Bonfire"]["purchased"]: # campfire dps increased to 5,000
             campfire_multiplier = 2.0
+        
+        if self.permanent_upgrades["Warm that Lava"]["purchased"]:
+            blanket_count = self.upgrades["blanket"]["count"]
+            lb_multiplier = 1 + 0.01 * (blanket_count // 5)
 
         for upgrade in self.upgrades.values(): # adding the normal upgrade dpss
             if "dps bonus" in upgrade:
@@ -491,6 +508,8 @@ class Game:
                     base_dps += dps_contribution * heater_fan_bonus_multiplier
                 elif upgrade["name"] == "Bonfire":
                     base_dps += dps_contribution * campfire_multiplier
+                elif upgrade["name"] == "Lava Bucket":
+                    base_dps += dps_contribution * lb_multiplier
                 else:
                     base_dps += dps_contribution
 
@@ -643,7 +662,7 @@ class Game:
         for i, key in enumerate(keys): # drawing all the permanent upgrades
             upgrade_data = self.permanent_upgrades[key]
             rect = self.get_permanent_upgrade_rect(i)
-            can_afford = self.dryness >= upgrade_data.get("cost", 0)
+            can_afford = self.dryness >= int(upgrade_data.get("cost", 0))
             
             if upgrade_data["purchased"]:
                 color = GREY 
@@ -653,10 +672,10 @@ class Game:
                 text_status = "Ascend once to Buy"
             elif can_afford: 
                 color = GREEN
-                text_status = f"Cost: {upgrade_data['cost']:,}" 
+                text_status = f"Cost: {upgrade_data['cost']:,}"
             else:
                 color = RED
-                text_status = f"Cost: {upgrade_data['cost']:,}" 
+                text_status = f"Cost: {upgrade_data['cost']:,}"
             
             pg.draw.rect(self.screen, color, rect, border_radius=5)
 
@@ -684,6 +703,10 @@ class Game:
                 upgrade_description = "Heat Lamp's dps x half the no. of light bulbs"
             elif key == "Better Dryers":
                 upgrade_description = "1% of DPS added to itself"
+            elif key == "More Clicks":
+                upgrade_description = "DPC increases every manual click"
+            elif key == "Warm that Lava":
+                upgrade_description = "Lava bucket's dps increases by 1% per 5 blankets"
             
             self.draw_text(self.screen,  upgrade_description, 16, WHITE, rect.centerx, rect.top + 40)
             self.draw_text(self.screen, text_status, 18, YELLOW, rect.centerx, rect.top + 70)
@@ -708,7 +731,7 @@ class Game:
             self.screen.blit(self.clicker_painting_img, self.clicker_painting_rect)
             
             # dryness amount label (dpc label | dps label)
-            dryness_text = f"Dryness: {int(self.dryness):,} (DPC: {self.dryness_per_click:,} | DPS: {self.dryness_per_second:,.2f})" # :.2f limits to 2 decimal points
+            dryness_text = f"Dryness: {int(self.dryness):,} (DPC: {self.dryness_per_click:,.2f} | DPS: {self.dryness_per_second:,.2f})" # :.2f limits to 2 decimal points
             self.draw_text(self.screen, dryness_text, 36, WHITE, CLICKER_W // 2, 20)
             
             self.draw_upgrade_area()

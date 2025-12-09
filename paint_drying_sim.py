@@ -48,27 +48,27 @@ class Game:
         elif selected_difficulty == "Apocalypse":
             self.game_duration = 100
 
-            self.max_mobs = 18
-            self.spawn_delay = 300
+            self.max_mobs = 17
+            self.spawn_delay = 370
 
             self.coin_spawn_delay = 3200
-            self.coin_spawn_chance = 0.17
+            self.coin_spawn_chance = 0.5
             self.max_coins = 2
         
         elif selected_difficulty == "Apocalypse +":
             self.game_duration = 120
 
             self.max_mobs = 20
-            self.spawn_delay = 250
+            self.spawn_delay = 280
 
             self.coin_spawn_delay = 3500
             self.coin_spawn_chance = 0.5
             self.max_coins = 1
         
         elif selected_difficulty == "Speed Challenge":
-            self.game_duration = 25
+            self.game_duration = 48
 
-            self.max_mobs = 20
+            self.max_mobs = 22
             self.spawn_delay = 250
 
             self.coin_spawn_delay = 1600
@@ -82,7 +82,7 @@ class Game:
             self.spawn_delay = 650
 
             self.coin_spawn_delay = 2000
-            self.coin_spawn_chance = 0.5
+            self.coin_spawn_chance = 0.6
             self.max_coins = 2
 
         # for spawn timers of mobs and suns

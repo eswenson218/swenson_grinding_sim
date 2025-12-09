@@ -81,7 +81,7 @@ def load_main_menu(): # loads the games menu
                                 anchor = "center",
                                 bd = 3,
                                 bg = "#6E69F8",
-                                cursor = "question_arrow",
+                                cursor = "hand2",
                                 fg = "#FFFFFF",
                                 font = ("Arial", 12),
                                 height = 1,
@@ -207,10 +207,13 @@ def tutorial_screen():
     tutorial_label = tk.Label(root, text = "Tutorials", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4, cursor = "question_arrow")
     tutorial_label.pack(padx = 20)
 
+    tutorial_frame = tk.Frame(root, bg = "#2A2885")
+    tutorial_frame.pack()
+
     button_frame = tk.Frame(root, bg = "#1C1B52")
     button_frame.pack()
 
-    pds_button = tk.Button(button_frame,
+    pds_button = tk.Button(tutorial_frame,
                    text="Paint Drying Sim",
                    command = pds_tutorial,
                    activebackground="#669361",
@@ -226,9 +229,9 @@ def tutorial_screen():
                    width=15,
                    wraplength=100)
 
-    pds_button.pack(padx = 10, pady = 10, anchor = "center")
+    pds_button.pack(padx = 20, pady = 10, anchor = "center")
 
-    paint_clicker_button = tk.Button(button_frame,
+    paint_clicker_button = tk.Button(tutorial_frame,
                                      text = "Paint Drying Clicker",
                                      command = pdc_tutorial,
                                      bd = 3,
@@ -242,9 +245,9 @@ def tutorial_screen():
                                      fg = "#FFFFFF",
                                      activebackground = "#9D8665")
 
-    paint_clicker_button.pack(padx = 10, pady = 10, anchor = "center")
+    paint_clicker_button.pack(padx = 20, pady = 10, anchor = "center")
 
-    free_paint_button = tk.Button(button_frame,
+    free_paint_button = tk.Button(tutorial_frame,
                                   text = "Paint Drying Clicker",
                                      command = fp_tutorial,
                                      bd = 3,
@@ -258,7 +261,7 @@ def tutorial_screen():
                                      fg = "#000000",
                                      activebackground = "#F5D4F8")
     
-    free_paint_button.pack(padx = 10, pady = 10, anchor = "center")
+    free_paint_button.pack(padx = 20, pady = 10, anchor = "center")
 
     back_button = tk.Button(button_frame, text = "Back", command = load_main_menu, font = ("Arial", 12), width = 20, cursor = "sb_left_arrow", bg = "#DC5151", fg = "#FFFFFF", activebackground = "#E27E7E")
     back_button.pack(side = "left", padx = 20, pady = 20)
