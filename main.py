@@ -76,7 +76,7 @@ def load_main_menu(): # loads the games menu
     bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
     tutorials_button = tk.Button(root,
-                                text = "Tutorials",
+                                text = "Help",
                                 command = tutorial_screen,
                                 activebackground = "#908DFF",
                                 anchor = "center",
@@ -86,7 +86,7 @@ def load_main_menu(): # loads the games menu
                                 fg = "#FFFFFF",
                                 font = ("Arial", 12),
                                 height = 1,
-                                width = 8)
+                                width = 5)
     
     tutorials_button.pack(padx = 20, pady = 20, anchor = "ne")
 
@@ -192,20 +192,20 @@ def load_main_menu(): # loads the games menu
     quit_button.grid(row = 2, column = 1, padx = 10, pady = 10)
 
 def pds_tutorial():
-    messagebox.showinfo("Paint Drying Sim Tutorial", "A Defense Game!\n\nClick the mobs. Touchscreen works (and is reccommended).\nProtect the painting from the animals for long enough to win!")
+    messagebox.showinfo("Paint Drying Sim Help", "A Defense Game!\n\nClick the mobs. Touchscreen works (and is reccommended).\nProtect the painting from the animals for long enough to win!")
 
 def pdc_tutorial():
-    messagebox.showinfo("Paint Drying Clicker Tutorial", "An Artistic Clicker Game!\n\nClick the painting to get dryness.\nSpend dryness on upgrades to increase dryness per click (DPC) or dryness per second (DPS).\nUpgrade Upgrades are permanent upgrades that do special things.\nAscend to unlock permanent upgrades (be careful! ascending wipes your progress on everything else).")
+    messagebox.showinfo("Paint Drying Clicker Help", "An Artistic Clicker Game!\n\nClick the painting to get dryness.\nSpend dryness on upgrades to increase dryness per click (DPC) or dryness per second (DPS).\nUpgrade Upgrades are permanent upgrades that do special things.\nAscend to unlock permanent upgrades (be careful! ascending wipes your progress on everything else).")
 
 def fp_tutorial():
-    messagebox.showinfo("Free Paint Tutorial", "Free Painting!\n\nClick and drag to draw.\nUse Left Control + Q through L to change color.\nUse number keys (1-0) to change line size and Left Alt + number keys for finer changes.\nPress D for draw mode and E for erase mode.")
+    messagebox.showinfo("Free Paint Help", "Free Painting!\n\nClick and drag to draw.\nUse Left Control + Q through L to change color.\nUse number keys (1-0) to change line size and Left Alt + number keys for finer changes.\nPress D for draw mode and E for erase mode.")
 
 def tutorial_screen():
     clear_all_widgets()
 
-    root.title("Tutorials")
+    root.title("Help")
 
-    tutorial_label = tk.Label(root, text = "Tutorials", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4, cursor = "question_arrow")
+    tutorial_label = tk.Label(root, text = "Help", font = ("Arial", 16), fg = "#000000", bg = "#E5C837", width = 20, height = 4, cursor = "question_arrow")
     tutorial_label.pack(padx = 20)
 
     tutorial_frame = tk.Frame(root, bg = "#2A2885")
@@ -249,7 +249,7 @@ def tutorial_screen():
     paint_clicker_button.pack(padx = 20, pady = 10, anchor = "center")
 
     free_paint_button = tk.Button(tutorial_frame,
-                                  text = "Paint Drying Clicker",
+                                  text = "Free Paint",
                                      command = fp_tutorial,
                                      bd = 3,
                                      cursor = "spraycan",
