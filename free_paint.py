@@ -159,9 +159,9 @@ class Game:
                     elif event.key == pg.K_p:
                         self.color = BLUE
                     elif event.key == pg.K_a:
-                        self.color = CYAN
-                    elif event.key == pg.K_s:
                         self.color = LIGHT_BLUE
+                    elif event.key == pg.K_s:
+                        self.color = CYAN
                     elif event.key == pg.K_d:
                         self.color = LIGHT_PURPLE
                     elif event.key == pg.K_f:
