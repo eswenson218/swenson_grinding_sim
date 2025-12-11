@@ -28,6 +28,9 @@ class Game:
         # where to get sounds
         self.sound_folder = path.join(self.game_folder, 'sounds')
 
+        pg.mixer.music.load(path.join(self.sound_folder, "fp bg music.mp3"))
+        pg.mixer.music.set_volume(settings.VOL_MULT * 0.4)
+        pg.mixer.music.play(-1)
 
     def new(self):
         # the sprite Groups allow us to update and draw sprites in grouped batches
