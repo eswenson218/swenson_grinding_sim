@@ -192,13 +192,13 @@ def load_main_menu(): # loads the games menu
     quit_button.grid(row = 2, column = 1, padx = 10, pady = 10)
 
 def pds_tutorial():
-    messagebox.showinfo("Paint Drying Sim Tutorial", "Click the mobs. Touchscreen works (and is reccommended).\nProtect the painting from the animals for long enough to win!")
+    messagebox.showinfo("Paint Drying Sim Tutorial", "A Defense Game!\n\nClick the mobs. Touchscreen works (and is reccommended).\nProtect the painting from the animals for long enough to win!")
 
 def pdc_tutorial():
-    messagebox.showinfo("Paint Drying Clicker Tutorial", "Click the painting to get dryness.\nSpend dryness on upgrades to increase dryness per click (DPC) or dryness per second (DPS).\nUpgrade Upgrades are permanent upgrades that do special things.\nAscend to unlock permanent upgrades (be careful! ascending wipes your progress on everything else).")
+    messagebox.showinfo("Paint Drying Clicker Tutorial", "An Artistic Clicker Game!\n\nClick the painting to get dryness.\nSpend dryness on upgrades to increase dryness per click (DPC) or dryness per second (DPS).\nUpgrade Upgrades are permanent upgrades that do special things.\nAscend to unlock permanent upgrades (be careful! ascending wipes your progress on everything else).")
 
 def fp_tutorial():
-    messagebox.showinfo("Free Paint Tutorial", "This will be a bare bones paint thing.")
+    messagebox.showinfo("Free Paint Tutorial", "Free Painting!\n\nClick and drag to draw.\nUse Left Control + Q through L to change color.\nUse number keys (1-0) to change line size and Left Alt + number keys for finer changes.\nPress D for draw mode and E for erase mode.")
 
 def tutorial_screen():
     clear_all_widgets()
