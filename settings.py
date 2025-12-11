@@ -18,6 +18,9 @@ HEIGHT = TILESIZE[1] * TILES_H
 CLICKER_W = TILESIZE[0] * 36
 CLICKER_H = TILESIZE[1] * 24
 
+FP_W = TILESIZE[0] * 36
+FP_H = TILESIZE[1] * 24
+
 # player settings
 HEALTH = 5
 PLAYER_SPEED = 8
@@ -33,11 +36,13 @@ temp_mob_speed = 5
 
 # colors
 WHITE = (255, 255, 255)
+LIGHT_GREY = (200, 200, 200)
 GREY = (160, 160, 160)
 DARK_GREY = (100, 100, 100)
+NOT_QUITE_BLACK = (50, 50, 50)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
-GREEN = (0, 255, 0)
+GREEN = (0, 210, 0)
 BLUE = (0, 0, 255)
 ORANGE = (255, 153, 51)
 YELLOW = (255, 255, 0)

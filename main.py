@@ -22,6 +22,7 @@ from os import path
 # need to import these files with a different name so that their game classes don't overwrite each other
 import paint_drying_clicker as pdclicker
 import paint_drying_sim as pdsim
+import free_paint as fp
 
 import tkinter as tk
 from tkinter import messagebox
@@ -296,7 +297,16 @@ def run_pdc():
     load_main_menu()
 
 def run_fp():
-    messagebox.showinfo("Free Paint", "This hasn't been added yet.")
+    pg.mixer.music.pause()
+    root.withdraw()
+    try:
+        g = fp.Game()
+        g.new()
+        g.run()
+    except Exception as e:
+        messagebox.showerror("Error", f"Error: {e}")
+    root.deiconify()
+    load_main_menu()
 
 def apply_vol(vol):
     vol = int(vol)
@@ -542,6 +552,10 @@ def placeholder_cmd(): # secret dialog
         messagebox.showinfo("No Name","This is my final goodbye!")
     elif clicks == 200:
         messagebox.showinfo("No Name","Goodbye!")
+    elif clicks == 250:
+        messagebox.showinfo("No Name","Why are you still here...")
+    elif clicks == 251:
+        messagebox.showinfo("No Name","You do know theres nothing at the end of this...")
     else:
         messagebox.showinfo("Conversation Over (For Real)","No one responds... I guess the conversation really is over.")
 
