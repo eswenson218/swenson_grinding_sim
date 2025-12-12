@@ -1,9 +1,3 @@
-# swenson_grinding_sim
-
-hi
-
-its cool that you looked at this
-
 # Paint Drying Games
 
 The games are:
@@ -42,8 +36,6 @@ If you only want to play one of the games, you can run it from its file, but run
 # Features
 
 1. **Paint Drying Sim** (PDS)
-Genre: Defense Game
-
 Goal: Protect the painting from animals for a set duration to win.
 
 Controls: Click or tap the mobs to eliminate them. (Touchscreen is recommended).
@@ -51,21 +43,16 @@ Controls: Click or tap the mobs to eliminate them. (Touchscreen is recommended).
 Features: Offers a difficulty selection screen before starting.
 
 2. **Paint Drying Clicker** (PDC)
-Genre: Artistic Clicker/Idle Game
-
 Goal: Click the painting to gain "dryness"
 
 Features: Spend dryness on upgrades to increase Dryness Per Click (DPC) and Dryness Per Second (DPS).
-
-          Unlock permanent upgrades through Ascension (note: ascending wipes most progress).
+    Unlock Permanent Upgrades (Upgrade Upgrades) by ascending. (Be careful! Ascending wipes most of your progress.)
 
 Useful to Know: The abreviations used are DPC and DPS
     DPC stands for Dryness Per Click
     DPS stands for Dryness per Second
 
 3. **Free Paint**
-Genre: Drawing Application
-
 Goal: Make some cool art!
 
 Controls:
