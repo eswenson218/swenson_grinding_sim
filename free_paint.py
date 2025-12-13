@@ -28,7 +28,7 @@ class Game:
         # where to get sounds
         self.sound_folder = path.join(self.game_folder, 'sounds')
 
-        pg.mixer.music.load(path.join(self.sound_folder, "fp bg music.mp3"))
+        pg.mixer.music.load(path.join(self.sound_folder, "Transcendence.mp3"))
         pg.mixer.music.set_volume(settings.VOL_MULT * 0.4)
         pg.mixer.music.play(-1)
 
@@ -94,6 +94,8 @@ class Game:
                     self.color = BLACK
                 elif event.key == pg.K_e: # eraser function
                     self.color = WHITE
+                elif event.key == pg.K_f:
+                    pg.draw.rect(self.screen, self.color, (0,80, FP_W, FP_H))
                 # drawing size
                 elif event.key == pg.K_1:
                     self.draw_size = 10
@@ -225,9 +227,10 @@ class Game:
         self.draw_text(self.screen, "K", 18, WHITE, 965, 24)
         self.draw_text(self.screen, "L", 18, WHITE, 1015, 24)
 
-        self.draw_text(self.screen, "no. keys for sizes", 18, BLACK, 1090, 6)
-        self.draw_text(self.screen, "d = draw", 18, BLACK, 1090, 24)
-        self.draw_text(self.screen, "e = eraser", 18, BLACK, 1090, 42)
+        self.draw_text(self.screen, "num keys for sizes", 14, BLACK, 1090, 4)
+        self.draw_text(self.screen, "d = draw", 14, BLACK, 1090, 18)
+        self.draw_text(self.screen, "e = eraser", 14, BLACK, 1090, 32)
+        self.draw_text(self.screen, "f = fill screen", 14, BLACK, 1090, 48)
 
         self.all_sprites.draw(self.screen)
 
