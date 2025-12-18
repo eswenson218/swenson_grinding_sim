@@ -78,7 +78,7 @@ I would recommend using this if you are unsure on how the game works or what to 
 
 # People Who Helped Me
 Minglang Du (Github: https://github.com/minglangdu)
-Aldric Shi (Github: https://github.com/awesomekiller1937)
+Aldric Shi (Github: https://github.com/awsomekiller1937amongus-star)
 Mr. Cozort (Github: https://github.com/ccozort)
 
 thx and hf :)
